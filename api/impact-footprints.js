@@ -90,7 +90,7 @@ function handleNodeRequest(req, res, rootDir) {
 }
 
 module.exports = async function handler(req, res) {
-  const rootDir = process.cwd();
+  const rootDir = path.join(__dirname, "..");
   handleNodeRequest(req, res, rootDir);
 };
 
