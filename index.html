@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dreamers to Doers — Pan-African Leadership Masterclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./enhancements.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0C0B08;--bg-elev:#111009;--surface:#181510;--surface2:#1E1A12;
+  --border:#1E293B;--border-warm:#1D4ED8;
+  --text:#EAF2FF;--text-dim:#94A3B8;--text-muted:#64748B;
+  --gold:#2563EB;--gold-soft:#60A5FA;--gold-dim:#1D4ED8;--gold-glow:rgba(37,99,235,0.18);
+  --blue:#60A5FA;--blue-soft:#BFDBFE;--blue-deep:#1D4ED8;--blue-glow:rgba(96,165,250,0.18);
+  --accent:#DBEAFE;
+  --serif:'Fraunces',Georgia,serif;--sans:'Inter Tight',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:
+linear-gradient(180deg, #08111F 0%, #0B1324 45%, #0F172A 100%);
+color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--gold);color:#EFF6FF}
+
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;opacity:0.5;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main{position:relative;z-index:2}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(8,17,31,0.78);border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--serif);font-size:17px;font-weight:400;color:var(--text);text-decoration:none;letter-spacing:-0.02em}
+.nav-brand em{font-style:italic;color:var(--gold-soft)}
+.nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+.nav-links a{font-size:13px;letter-spacing:0.02em;text-decoration:none;color:var(--text-dim);font-weight:400;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--gold);color:#EFF6FF !important;padding:10px 20px;border-radius:6px;font-weight:600;font-size:13px !important;letter-spacing:0 !important;transition:all 0.25s;border:1px solid var(--gold)}
+.nav-cta:hover{background:transparent;color:var(--gold-soft) !important;box-shadow:0 0 24px var(--gold-glow)}
+
+/* HERO */
+.hero{min-height:100vh;padding:160px 48px 80px;position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center;max-width:1440px;margin:0 auto}
+.hero::before{content:'';position:absolute;top:30%;right:-5%;width:600px;height:600px;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 52%),radial-gradient(circle at 35% 35%,var(--blue-glow) 0%,transparent 68%);filter:blur(60px);z-index:-1;pointer-events:none}
+.hero-meta{font-family:var(--mono);font-size:11px;color:var(--gold-soft);letter-spacing:0.12em;margin-bottom:32px;display:flex;align-items:center;gap:12px;opacity:0;animation:rise 0.8s 0.1s forwards}
+.hero-meta::before{content:'';width:24px;height:1px;background:var(--gold)}
+h1.hero-title{font-family:var(--serif);font-size:clamp(44px,6.2vw,82px);line-height:1;font-weight:400;letter-spacing:-0.03em;color:var(--text);margin-bottom:32px;opacity:0;animation:rise 0.9s 0.2s forwards}
+h1.hero-title em{font-style:italic;font-weight:300;color:var(--gold-soft)}
+.hero-sub{font-size:17px;color:var(--text-dim);max-width:540px;line-height:1.65;margin-bottom:40px;opacity:0;animation:rise 0.9s 0.35s forwards}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-cta-row{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:rise 0.9s 0.5s forwards}
+.btn-primary{background:var(--gold);color:#EFF6FF;padding:16px 32px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all 0.25s;border:1px solid var(--gold)}
+.btn-primary::after{content:'→';transition:transform 0.25s}
+.btn-primary:hover{box-shadow:0 0 32px var(--gold-glow),0 8px 24px rgba(0,0,0,0.3);transform:translateY(-1px)}
+.btn-primary:hover::after{transform:translateX(4px)}
+.btn-secondary{background:transparent;color:var(--text);padding:16px 32px;border-radius:8px;font-weight:400;font-size:15px;text-decoration:none;border:1px solid var(--border-warm);display:inline-flex;align-items:center;gap:10px;transition:all 0.25s}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold-soft)}
+
+/* HERO VISUAL */
+.hero-visual{position:relative;opacity:0;animation:rise 1s 0.4s forwards}
+.event-card{background:linear-gradient(180deg,rgba(9,18,36,0.98) 0%,rgba(15,23,42,0.94) 100%);border:1px solid rgba(96,165,250,0.18);border-radius:14px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(96,165,250,0.08),0 0 40px rgba(96,165,250,0.08);transform:rotate(-1.5deg)}
+.card-header{padding:14px 18px;border-bottom:1px solid rgba(96,165,250,0.14);display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,rgba(15,23,42,0.98) 0%,rgba(8,17,31,0.92) 100%)}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.r{background:#FF5F57}.dot.y{background:#FEBC2E}.dot.g{background:#28C840}
+.card-title{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--text-muted)}
+.card-body{padding:28px 24px;font-family:var(--mono);font-size:13px;line-height:2}
+.cl{display:block}
+.cl-tag{color:var(--gold-soft)}.cl-key{color:var(--text-muted)}.cl-val{color:var(--text)}.cl-hl{color:var(--accent)}.cl-ok{color:var(--gold-soft)}
+.cursor-blink{display:inline-block;width:8px;height:14px;background:var(--gold);vertical-align:middle;animation:blink 1s infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+.hero-meta,h1.hero-title,.hero-sub,.hero-cta-row,.hero-visual{transform:translateY(20px)}
+
+.floating-badge{position:absolute;bottom:-32px;left:-40px;background:linear-gradient(180deg,rgba(15,23,42,0.98) 0%,rgba(8,17,31,0.94) 100%);border:1px solid rgba(96,165,250,0.18);border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:center;box-shadow:0 20px 40px rgba(0,0,0,0.4),0 0 28px rgba(96,165,250,0.08);transform:rotate(2.5deg)}
+.badge-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+.badge-text{font-size:12px;line-height:1.4}
+.badge-text strong{color:var(--text);display:block;font-weight:500}
+.badge-text span{color:var(--text-muted);font-family:var(--mono);font-size:10px;letter-spacing:0.06em}
+
+/* STATS */
+.stats{padding:72px 48px;max-width:1440px;margin:0 auto;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:48px}
+.stat-item{position:relative;padding-left:20px}
+.stat-item::before{content:'';position:absolute;left:0;top:8px;width:2px;height:calc(100% - 16px);background:var(--gold);opacity:0.7}
+.stat-num{font-family:var(--serif);font-size:clamp(44px,5vw,68px);font-weight:400;line-height:1;color:var(--text);letter-spacing:-0.03em;margin-bottom:8px}
+.stat-num .suf{color:var(--gold-soft);font-style:italic;font-weight:300}
+.stat-label{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase}
+
+/* SECTIONS */
+section{padding:120px 48px;max-width:1440px;margin:0 auto}
+.section-tag{font-family:var(--mono);font-size:11px;color:var(--gold-soft);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-title{font-family:var(--serif);font-size:clamp(36px,5vw,60px);font-weight:400;line-height:1.05;letter-spacing:-0.02em;color:var(--text);max-width:900px;margin-bottom:24px}
+.section-title em{font-style:italic;color:var(--gold-soft);font-weight:300}
+.section-lead{font-size:17px;color:var(--text-dim);max-width:680px;line-height:1.6}
+
+/* PROBLEM */
+.problem-section{background:linear-gradient(180deg,#08111F 0%,#0F172A 100%);margin-top:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative}
+.problem-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,var(--gold-glow),transparent 40%),radial-gradient(circle at 80% 60%,rgba(201,168,76,0.05),transparent 40%),radial-gradient(circle at 60% 25%,var(--blue-glow),transparent 36%);pointer-events:none}
+.problem-wrap{max-width:960px;margin:0 auto;padding:140px 48px;text-align:center;position:relative}
+.problem-headline{font-family:var(--serif);font-size:clamp(32px,4.5vw,52px);font-weight:400;line-height:1.15;letter-spacing:-0.02em;margin-bottom:36px}
+.problem-headline .dim{color:var(--text-dim);font-style:italic;font-weight:300}
+.problem-headline em{color:var(--gold-soft);font-style:italic;font-weight:300}
+.problem-body{font-size:17px;line-height:1.75;color:var(--text-dim);max-width:700px;margin:0 auto 18px}
+.problem-body strong{color:var(--text);font-weight:500}
+.problem-stamp{margin-top:36px;display:inline-flex;align-items:center;gap:12px;padding:12px 22px;border:1px solid var(--gold-dim);border-radius:999px;background:var(--gold-glow);font-family:var(--mono);font-size:12px;letter-spacing:0.1em;color:var(--gold-soft);text-transform:uppercase}
+.problem-stamp::before{content:'';width:8px;height:8px;background:var(--gold);border-radius:50%;box-shadow:0 0 12px var(--gold);animation:pulse 2s infinite;flex-shrink:0}
+
+/* DAYS GRID */
+.days-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:60px}
+.day-card{padding:36px 30px;background:var(--bg-elev);transition:background 0.25s;position:relative;overflow:hidden}
+.day-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:translateX(-100%);transition:transform 0.6s}
+.day-card:hover{background:var(--surface)}
+.day-card:hover::before{transform:translateX(100%)}
+.day-num{font-family:var(--mono);font-size:11px;color:var(--gold-soft);letter-spacing:0.15em;margin-bottom:4px}
+.day-date{font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:16px}
+.day-big{font-family:var(--serif);font-size:52px;font-weight:300;color:var(--border-warm);line-height:1;margin-bottom:12px}
+.day-title{font-family:var(--serif);font-size:20px;font-weight:500;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;line-height:1.2}
+.day-title em{color:var(--gold-soft);font-style:italic}
+.day-focus{color:var(--text-dim);font-size:13px;line-height:1.6;margin-bottom:20px}
+.day-topics{list-style:none;display:flex;flex-direction:column;gap:8px}
+.day-topics li{font-size:13px;color:var(--text-dim);display:flex;gap:10px;align-items:flex-start}
+.day-topics li::before{content:'→';color:var(--gold-soft);font-family:var(--mono);flex-shrink:0}
+
+/* TIME BAND */
+.time-band{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:60px;border:1px solid var(--border-warm);border-radius:12px;overflow:hidden;background:var(--bg-elev)}
+.time-cell{padding:40px 32px;border-right:1px solid var(--border)}
+.time-cell:last-child{border-right:none}
+.time-cell-label{font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px}
+.time-cell-value{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.1;color:var(--text);letter-spacing:-0.02em;margin-bottom:8px}
+.time-cell-value em{color:var(--gold-soft);font-style:italic}
+.time-cell-meta{color:var(--text-dim);font-size:13px}
+.countdown-row{margin-top:24px;display:flex;gap:16px;padding:20px 24px;background:var(--surface);border:1px dashed var(--border-warm);border-radius:12px;align-items:center;flex-wrap:nowrap}
+.countdown-label{font-family:var(--mono);font-size:11px;color:var(--gold-soft);letter-spacing:0.15em;text-transform:uppercase;margin-right:auto;white-space:nowrap;flex-shrink:0}
+.cd-units{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex-shrink:0}
+.c-unit{min-width:56px;text-align:center;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:6px}
+.c-num{font-family:var(--serif);font-size:22px;color:var(--gold-soft);line-height:1;display:block;margin-bottom:4px;font-weight:400}
+.c-label{font-family:var(--mono);font-size:9px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase}
+
+/* PRICING */
+.pricing-section{background:linear-gradient(180deg,rgba(9,18,36,1) 0%,rgba(15,23,42,0.96) 100%);margin-top:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.pricing-wrap{max-width:1440px;margin:0 auto;padding:80px 48px}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:48px}
+.price-cell{padding:48px 40px;background:var(--bg-elev)}
+.price-label{font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px}
+.price-amount{font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-weight:400;letter-spacing:-0.03em;color:var(--text);line-height:1;display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.price-amount .cur{font-size:0.45em;color:var(--text-dim);font-family:var(--sans);font-weight:500}
+.price-amount .strike{text-decoration:line-through;color:var(--text-muted);font-size:0.55em}
+.price-amount .live{color:var(--gold-soft)}
+.price-note{font-size:14px;color:var(--text-dim);line-height:1.5}
+.price-note strong{color:var(--gold);font-weight:500}
+.early-tag{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:8px 16px;border-radius:999px;background:var(--gold-glow);border:1px solid var(--gold-dim);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;color:var(--gold-soft);text-transform:uppercase}
+.early-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2s infinite}
+
+/* WHO */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px}
+.who-card{padding:32px;background:rgba(9,18,36,0.92);border:1px solid var(--border);border-radius:12px;transition:all 0.3s;position:relative;overflow:hidden}
+.who-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:translateX(-100%);transition:transform 0.6s}
+.who-card:hover{border-color:var(--border-warm);transform:translateY(-4px)}
+.who-card:hover::before{transform:translateX(100%)}
+.who-icon{width:44px;height:44px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold-soft);font-family:var(--mono);font-size:14px}
+.who-card h4{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:8px;letter-spacing:-0.01em}
+.who-card p{color:var(--text-dim);font-size:14px;line-height:1.65}
+
+/* WHY */
+.why-section{background:#0B1324;margin-top:0}
+.why-wrap{max-width:1440px;margin:0 auto;padding:120px 48px}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-top:60px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.why-item{padding:40px 36px;background:rgba(9,18,36,0.94);transition:background 0.25s}
+.why-item:hover{background:var(--surface)}
+.why-num{font-family:var(--mono);font-size:12px;color:var(--gold-soft);letter-spacing:0.1em;margin-bottom:14px}
+.why-item h4{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em}
+.why-item p{color:var(--text-dim);font-size:14px;line-height:1.65}
+
+/* OUTCOMES */
+.outcomes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:60px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.outcome-cell{padding:40px 32px;background:rgba(9,18,36,0.94);text-align:center;transition:background 0.25s}
+.outcome-cell:hover{background:var(--surface)}
+.outcome-glyph{font-size:22px;margin-bottom:14px;display:block;color:var(--gold-soft)}
+.outcome-title{font-family:var(--serif);font-size:22px;color:var(--text);margin-bottom:10px;font-weight:500}
+.outcome-desc{font-size:13px;color:var(--text-dim);line-height:1.65}
+
+/* FORM */
+.form-section{background:linear-gradient(180deg,#08111F 0%,#0F172A 100%);margin-top:0;position:relative}
+.form-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,var(--gold-glow),transparent 40%),radial-gradient(circle at 20% 80%,rgba(201,168,76,0.04),transparent 40%),radial-gradient(circle at 35% 30%,var(--blue-glow),transparent 34%);pointer-events:none}
+.form-wrap{max-width:1440px;margin:0 auto;padding:120px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative}
+.form-left h2{font-family:var(--serif);font-size:clamp(38px,4.5vw,54px);font-weight:400;line-height:1.05;letter-spacing:-0.02em;margin-bottom:20px}
+.form-left h2 em{color:var(--gold-soft);font-style:italic}
+.form-left p{color:var(--text-dim);font-size:16px;line-height:1.7;margin-bottom:32px}
+.form-bullets{list-style:none;display:grid;gap:14px}
+.form-bullets li{display:flex;gap:12px;align-items:flex-start;color:var(--text);font-size:14px}
+.form-bullets li::before{content:'→';color:var(--gold-soft);font-family:var(--mono);margin-top:2px}
+.form-card{background:linear-gradient(180deg,rgba(15,23,42,0.98) 0%,rgba(8,17,31,0.96) 100%);border:1px solid var(--border-warm);border-radius:16px;padding:40px;box-shadow:0 40px 80px rgba(0,0,0,0.4);position:relative}
+.form-card-tag{position:absolute;top:-12px;left:32px;background:var(--gold);color:#0C0B08;padding:4px 12px;border-radius:4px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
+.form-card h3{font-family:var(--serif);font-size:24px;font-weight:500;margin-bottom:4px}
+.form-card .sub{font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:28px}
+.field{margin-bottom:18px}
+.field label{display:block;font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px}
+.field input,.field select{width:100%;background:#08111F;border:1px solid var(--border);border-radius:8px;padding:14px 16px;color:var(--text);font-family:var(--sans);font-size:14px;transition:border-color 0.2s;appearance:none;-webkit-appearance:none}
+.field input:focus,.field select:focus{outline:none;border-color:var(--gold)}
+.field input::placeholder{color:var(--text-muted)}
+.field select option{background:var(--surface);color:var(--text)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.waitlist-divider{display:flex;align-items:center;gap:12px;margin:18px 0 12px;color:var(--text-muted);font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase}
+.waitlist-divider::before,.waitlist-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.waitlist-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-family:var(--sans);font-size:14px;font-weight:400;padding:13px 16px;cursor:pointer;text-decoration:none;transition:border-color 0.2s,color 0.2s}
+.waitlist-btn:hover{border-color:var(--gold);color:var(--gold-soft)}
+.waitlist-btn svg{width:16px;height:16px;flex-shrink:0}
+.form-submit{width:100%;background:var(--gold);color:#0C0B08;border:none;padding:16px;border-radius:8px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;transition:all 0.25s;display:flex;justify-content:center;align-items:center;gap:10px}
+.form-submit:hover{box-shadow:0 0 32px var(--gold-glow);transform:translateY(-1px)}
+.form-fine{font-family:var(--mono);font-size:10px;color:var(--text-muted);text-align:center;margin-top:14px;letter-spacing:0.05em}
+
+/* SUCCESS */
+.success-overlay{position:fixed;inset:0;background:rgba(12,11,8,0.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);z-index:2000;display:none;align-items:center;justify-content:center;padding:24px}
+.success-overlay.active{display:flex;animation:fadeIn 0.4s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.success-card{max-width:540px;width:100%;background:var(--surface);border:1px solid var(--border-warm);border-radius:20px;padding:48px 40px;text-align:center;position:relative;box-shadow:0 40px 100px rgba(0,0,0,0.6),0 0 60px var(--gold-glow)}
+.success-check{width:72px;height:72px;margin:0 auto 24px;border-radius:50%;background:var(--gold-glow);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;position:relative}
+.success-check svg{width:32px;height:32px;stroke:var(--gold-soft)}
+.success-check::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--gold);animation:ring 1.6s infinite;opacity:0.5}
+@keyframes ring{0%{transform:scale(1);opacity:0.5}100%{transform:scale(1.4);opacity:0}}
+.success-card h2{font-family:var(--serif);font-size:36px;font-weight:400;letter-spacing:-0.02em;margin-bottom:12px}
+.success-card h2 em{color:var(--gold-soft);font-style:italic}
+.success-card .primary-note{color:var(--text-dim);font-size:16px;line-height:1.6;margin-bottom:24px}
+.redirect-bar{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:var(--mono);font-size:12px;color:var(--gold-soft);letter-spacing:0.05em;margin-bottom:16px}
+.redirect-bar .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.manual-link{font-size:13px;color:var(--text-muted)}
+.manual-link a{color:var(--gold-soft);text-decoration:none;font-weight:500}
+.manual-link a:hover{color:var(--gold);text-decoration:underline}
+
+/* FOOTER */
+footer{padding:80px 48px 40px;border-top:1px solid var(--border);background:var(--bg);position:relative}
+.footer-inner{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;margin-bottom:60px}
+.footer-tagline{font-family:var(--serif);font-size:20px;font-style:italic;color:var(--text-dim);max-width:320px;line-height:1.4;font-weight:300;margin-top:8px}
+.footer-col h5{font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:18px}
+.footer-col ul{list-style:none;display:grid;gap:10px}
+.footer-col a{color:var(--text-dim);text-decoration:none;font-size:14px;transition:color 0.2s}
+.footer-col a:hover{color:var(--gold-soft)}
+.footer-bottom{max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:0.05em}
+.footer-bottom a{color:var(--text-muted);text-decoration:none;margin-left:20px}
+.footer-bottom a:hover{color:var(--gold-soft)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:14px 20px}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;gap:48px;padding:120px 24px 60px}
+  .hero-visual{max-width:500px;margin:0 auto;width:100%}
+  .floating-badge{position:relative;bottom:auto;left:auto;transform:none;margin:24px auto 0}
+  .stats{padding:48px 24px}
+  .stats-inner{grid-template-columns:repeat(2,1fr);gap:32px}
+  section{padding:80px 24px}
+  .problem-wrap{padding:100px 24px}
+  .days-grid{grid-template-columns:1fr}
+  .time-band{grid-template-columns:1fr}
+  .time-cell{border-right:none;border-bottom:1px solid var(--border)}
+  .time-cell:last-child{border-bottom:none}
+  .who-grid{grid-template-columns:1fr}
+  .why-wrap{padding:80px 24px}
+  .why-grid{grid-template-columns:1fr}
+  .outcomes-grid{grid-template-columns:1fr 1fr}
+  .form-wrap{grid-template-columns:1fr;gap:48px;padding:80px 24px}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:40px}
+  footer{padding:60px 24px 32px}
+  .countdown-row{flex-direction:column;align-items:stretch;gap:14px;padding:18px}
+  .countdown-label{margin-right:0;text-align:center}
+  .cd-units{grid-template-columns:repeat(4,1fr);gap:8px;width:100%}
+  .pricing-grid{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .stats-inner{grid-template-columns:1fr}
+  .hero-cta-row{flex-direction:column;align-items:stretch}
+  .btn-primary,.btn-secondary{justify-content:center}
+  .footer-inner{grid-template-columns:1fr}
+  .outcomes-grid{grid-template-columns:1fr}
+  .success-card{padding:36px 24px}
+  .success-card h2{font-size:28px}
+  .footer-bottom{flex-direction:column;gap:16px;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="noise"></div>
+
+<nav>
+  <a href="#" class="nav-brand">Dreamers <em>to Doers</em></a>
+  <ul class="nav-links">
+    <li><a href="#curriculum">Curriculum</a></li>
+    <li><a href="#who">Who It's For</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#register" class="nav-cta">Register Now</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-meta">Pan-African Leadership Masterclass · June 2025</div>
+    <h1 class="hero-title">Dreamers<br><em>to Doers.</em></h1>
+    <p class="hero-sub">An Advanced 3-Day Masterclass on <strong>Designing, Funding, and Executing</strong> World-Class Events and Social Impact Projects — built for the African changemaker ready to build.</p>
+    <div class="hero-cta-row">
+      <a href="#register" class="btn-primary">Secure My Seat</a>
+      <a href="#curriculum" class="btn-secondary">View Curriculum</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="event-card">
+      <div class="card-header">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="card-title">dreamers-to-doers ; masterclass</span>
+      </div>
+      <div class="card-body">
+        <span class="cl"><span class="cl-tag">~ $</span> <span class="cl-val">load masterclass.config</span></span>
+        <span class="cl">&nbsp;</span>
+        <span class="cl"><span class="cl-key">  format   </span><span class="cl-hl">→</span> <span class="cl-val">Virtual · Zoom</span></span>
+        <span class="cl"><span class="cl-key">  dates    </span><span class="cl-hl">→</span> <span class="cl-val">June 19 – 21, 2025</span></span>
+        <span class="cl"><span class="cl-key">  daily    </span><span class="cl-hl">→</span> <span class="cl-val">6:00 PM – 10:00 PM WAT</span></span>
+        <span class="cl"><span class="cl-key">  seats    </span><span class="cl-hl">→</span> <span class="cl-val">100 Changemakers</span></span>
+        <span class="cl"><span class="cl-key">  level    </span><span class="cl-hl">→</span> <span class="cl-val">Advanced</span></span>
+        <span class="cl">&nbsp;</span>
+        <span class="cl"><span class="cl-ok">✓</span> <span class="cl-hl">design.os &nbsp;&nbsp;&nbsp;&nbsp;</span>loaded</span>
+        <span class="cl"><span class="cl-ok">✓</span> <span class="cl-hl">funding.os &nbsp;&nbsp;</span>loaded</span>
+        <span class="cl"><span class="cl-ok">✓</span> <span class="cl-hl">execution.os </span>loaded</span>
+        <span class="cl">&nbsp;</span>
+        <span class="cl"><span class="cl-tag">~ $</span> <span class="cl-val">run ./your-impact-project</span><span class="cursor-blink"></span></span>
+      </div>
+    </div>
+    <div class="floating-badge">
+      <span class="badge-dot"></span>
+      <div class="badge-text">
+        <strong>Early Bird Active</strong>
+        <span>50% OFF · Ends June 1st</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">3<span class="suf">Days</span></div>
+      <div class="stat-label">Intensive Masterclass</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100<span class="suf">+</span></div>
+      <div class="stat-label">Seats Per Cohort</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4<span class="suf">hrs</span></div>
+      <div class="stat-label">Per Day, Live Sessions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Pan<span class="suf">-African</span></div>
+      <div class="stat-label">Context &amp; Relevance</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem-section" style="max-width:none;padding:0">
+  <div class="problem-wrap">
+    <h2 class="problem-headline">
+      Africa doesn't lack <span class="dim">dreamers.</span><br>
+      It lacks <em>equipped doers.</em>
+    </h2>
+    <p class="problem-body">Promising initiatives stall. Events underdeliver. Transformative social projects never reach their potential — not because of a lack of passion, but because of a <strong>critical deficit in practical knowledge, structured frameworks, and execution competency.</strong></p>
+    <p class="problem-body" style="margin-top:20px">Dreamers to Doers was built specifically to close that gap — with precision, depth, and a relentless focus on real-world application.</p>
+    <div class="problem-stamp">The masterclass that turns ideas into impact</div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum">
+  <div class="section-tag">01 · Curriculum</div>
+  <h2 class="section-title">3 Days. <em>End-to-end</em> execution.</h2>
+  <p class="section-lead">Design → Positioning → Funding → Resource Mobilisation → Execution Readiness. No gaps. No fragmented knowledge.</p>
+
+  <div class="days-grid">
+    <div class="day-card">
+      <div class="day-num">// DAY 01</div>
+      <div class="day-date">FRIDAY · JUNE 19 · 6:00 PM – 10:00 PM WAT</div>
+      <div class="day-big">01</div>
+      <h3 class="day-title">Designing, Positioning &amp; <em>Fundable Ideas</em></h3>
+      <p class="day-focus">Turning ideas into clear, compelling, visible, and fundable concepts</p>
+      <ul class="day-topics">
+        <li>The Power of Projects in the Future of Work</li>
+        <li>From Idea to Clarity — structured, actionable thinking</li>
+        <li>Designing High-Impact Projects &amp; Events</li>
+        <li>Strategic Positioning &amp; Branding</li>
+        <li>Designing for Visibility from Day One</li>
+        <li>Building Fundable Ideas from the Start</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-num">// DAY 02</div>
+      <div class="day-date">SATURDAY · JUNE 20 · 6:00 PM – 10:00 PM WAT</div>
+      <div class="day-big">02</div>
+      <h3 class="day-title">Funding, Partnerships &amp; <em>Resource Mobilisation</em></h3>
+      <p class="day-focus">Securing the money, partnerships, and resources needed to bring ideas to life</p>
+      <ul class="day-topics">
+        <li>Understanding the African Funding Landscape</li>
+        <li>Sponsor &amp; Partner Psychology</li>
+        <li>Crafting Winning Proposals &amp; Pitches</li>
+        <li>Visibility &amp; Branding as a Funding Tool</li>
+        <li>Building Strategic Partnerships</li>
+        <li>Resource Mobilisation Beyond Money</li>
+      </ul>
+    </div>
+    <div class="day-card">
+      <div class="day-num">// DAY 03</div>
+      <div class="day-date">SUNDAY · JUNE 21 · 6:00 PM – 10:00 PM WAT</div>
+      <div class="day-big">03</div>
+      <h3 class="day-title">Open Masterclass — <em>Clarity &amp; Real Conversations</em></h3>
+      <p class="day-focus">Practical direction from practitioners — no slides, no scripts, just honest conversation</p>
+      <ul class="day-topics">
+        <li>Project &amp; Event Design — live deep-dive Q&amp;A</li>
+        <li>Funding &amp; Sponsorship — real questions answered</li>
+        <li>Execution &amp; Implementation challenges</li>
+        <li>Branding &amp; Visibility strategies</li>
+        <li>Personal Growth &amp; Leadership consistency</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TIME & DATE -->
+<section>
+  <div class="section-tag">02 · When &amp; Where</div>
+  <h2 class="section-title">Clear your calendar. <em>June 19 - 21.</em></h2>
+  <p class="section-lead">Three consecutive days, live on Zoom. Four hours per session. Register once, show up all three days.</p>
+
+  <div class="time-band">
+    <div class="time-cell">
+      <div class="time-cell-label">Dates</div>
+      <div class="time-cell-value"><em>19th – 21st</em><br>June 2025</div>
+      <div class="time-cell-meta">Three live virtual sessions</div>
+    </div>
+    <div class="time-cell">
+      <div class="time-cell-label">Daily Time</div>
+      <div class="time-cell-value"><em>6:00</em> PM<br>WAT · Daily</div>
+      <div class="time-cell-meta">4 hours per day · West African Time</div>
+    </div>
+    <div class="time-cell">
+      <div class="time-cell-label">Platform</div>
+      <div class="time-cell-value"><em>Zoom</em><br>Virtual</div>
+      <div class="time-cell-meta">Live stream link sent on registration</div>
+    </div>
+  </div>
+
+  <div class="countdown-row">
+    <div class="countdown-label">⏱ Early Bird Ends In</div>
+    <div class="cd-units">
+      <div class="c-unit"><span class="c-num" id="cd-d">00</span><span class="c-label">Days</span></div>
+      <div class="c-unit"><span class="c-num" id="cd-h">00</span><span class="c-label">Hours</span></div>
+      <div class="c-unit"><span class="c-num" id="cd-m">00</span><span class="c-label">Mins</span></div>
+      <div class="c-unit"><span class="c-num" id="cd-s">00</span><span class="c-label">Secs</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing" style="max-width:none;padding:0">
+  <div class="pricing-wrap">
+    <div class="section-tag">03 · Pricing</div>
+    <h2 class="section-title">Invest in your <em>execution.</em></h2>
+    <p class="section-lead">One price. One decision. Three days that could change the trajectory of every project you build from here.</p>
+    <div class="pricing-grid">
+      <div class="price-cell">
+        <div class="price-label">Early Bird Rate — Ends June 1st</div>
+        <div class="price-amount">
+          <span class="cur">₦</span>
+          <span class="strike">20,000</span>
+          <span style="color:var(--text-dim);font-size:0.7em;font-family:var(--sans)">→</span>
+          <span class="live">10,000</span>
+        </div>
+        <p class="price-note">50% off the full price. <strong>Save ₦10,000</strong> if you register before June 1st.</p>
+        <div class="early-tag">Limited Time · 50% Discount Active</div>
+      </div>
+      <div class="price-cell">
+        <div class="price-label">Regular Rate</div>
+        <div class="price-amount">
+          <span class="cur">₦</span>
+          <span class="live" style="color:var(--text)">20,000</span>
+        </div>
+        <p class="price-note">Full price applies after the early bird window closes June 1st. Secure the better rate now.</p>
+        <div style="margin-top:20px;font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:0.1em">→ SAME 3-DAY ACCESS · SAME FULL CURRICULUM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section id="who">
+  <div class="section-tag">04 · Who It's For</div>
+  <h2 class="section-title">Built for serious <em>Pan-African changemakers.</em></h2>
+  <p class="section-lead">You sit at the intersection of ambition and action — ready to move beyond conversation and begin building.</p>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-icon">01</div>
+      <h4>University Students</h4>
+      <p>Undergrad and postgrad students actively involved in leadership, volunteering, or campus-based initiatives across African universities.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">02</div>
+      <h4>Early-Career Professionals</h4>
+      <p>Professionals seeking to build influence and impact through project-based work beyond their formal careers.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">03</div>
+      <h4>NGO &amp; Social Enterprise Founders</h4>
+      <p>Founders and team members looking to strengthen capacity for project design, funding, and execution.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">04</div>
+      <h4>Event Planners &amp; Coordinators</h4>
+      <p>Practitioners aiming to elevate their work to a more strategic, structured, and world-class standard.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">05</div>
+      <h4>Aspiring Changemakers</h4>
+      <p>Individuals with strong ideas but limited knowledge of how to transform them into actionable, fundable, and scalable projects.</p>
+    </div>
+    <div class="who-card" style="background:var(--surface);border-color:var(--gold-dim)">
+      <div class="who-icon" style="background:var(--gold-glow);color:var(--gold)">✦</div>
+      <h4 style="color:var(--gold-soft)">The Ideal Participant</h4>
+      <p>Has ideas or ongoing initiatives but struggles with execution. Wants to understand funding and partnerships. Ready to move from passion to structure, strategy, and measurable impact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why-section" style="max-width:none;padding:0">
+  <div class="why-wrap">
+    <div class="section-tag">05 · Why Register</div>
+    <h2 class="section-title">What makes this <em>different.</em></h2>
+    <p class="section-lead">Not a conventional masterclass built on inspiration or generic frameworks. A deep, execution-driven experience — 72 hours that move you from ideas to actionable plans.</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-num">// 01</div>
+        <h4>Execution Over Motivation</h4>
+        <p>Every session is built around practical systems and real tools. Participants aren't just told what to do — they're shown exactly how, using frameworks drawn from real projects and lived experience.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">// 02</div>
+        <h4>End-to-End Project Lifecycle</h4>
+        <p>While most programs address one fragment of the journey, this masterclass covers the entire arc: design → positioning → funding → resource mobilisation → execution readiness.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">// 03</div>
+        <h4>Real-Life Cases &amp; Lived Experience</h4>
+        <p>Every concept is grounded in actual project experience. Speakers break down projects they've led, share failures and lessons, and provide behind-the-scenes insights no textbook can offer.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">// 04</div>
+        <h4>Integrated Visibility &amp; Branding</h4>
+        <p>Branding is embedded from the moment of ideation — not an afterthought. Participants learn to build projects that naturally attract attention, credibility, and funding from day one.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">// 05</div>
+        <h4>Funding-Centric Design</h4>
+        <p>Fundability is integrated into every topic — from idea design to proposal structure to sponsor psychology. Participants learn how to design projects that deserve to be funded.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">// 06</div>
+        <h4>Pan-African Context &amp; Relevance</h4>
+        <p>Tailored entirely to the African ecosystem — local funding realities, structural challenges, cultural dynamics, and continental opportunities. No imported theory that doesn't apply here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section>
+  <div class="section-tag">06 · Outcomes</div>
+  <h2 class="section-title">What you leave <em>equipped</em> to do.</h2>
+  <p class="section-lead">Participants don't just leave inspired — they leave equipped, positioned, and actively ready to execute.</p>
+  <div class="outcomes-grid">
+    <div class="outcome-cell"><span class="outcome-glyph">✦</span><div class="outcome-title">Design</div><p class="outcome-desc">Structured, high-impact projects with clear objectives, deliverables, and execution models</p></div>
+    <div class="outcome-cell"><span class="outcome-glyph">◈</span><div class="outcome-title">Position</div><p class="outcome-desc">Brand your initiative with strategic clarity to attract audience, funding, and partners</p></div>
+    <div class="outcome-cell"><span class="outcome-glyph">◆</span><div class="outcome-title">Fund</div><p class="outcome-desc">Secure sponsorships, grants, and partnerships through compelling proposals and pitches</p></div>
+    <div class="outcome-cell"><span class="outcome-glyph">⬡</span><div class="outcome-title">Mobilize</div><p class="outcome-desc">Mobilize financial and non-financial resources to execute even with limited infrastructure</p></div>
+    <div class="outcome-cell"><span class="outcome-glyph">✧</span><div class="outcome-title">Execute</div><p class="outcome-desc">Deliver projects and events at a world-class standard, managing teams and timelines</p></div>
+    <div class="outcome-cell"><span class="outcome-glyph">◉</span><div class="outcome-title">Build</div><p class="outcome-desc">Sustainable visibility and credibility that outlasts individual projects and drives long-term impact</p></div>
+  </div>
+</section>
+
+<!-- HOST -->
+<section id="host">
+  <div class="section-tag">07 A· Host</div>
+  <h2 class="section-title">Meet your <em>host.</em></h2>
+  <p class="section-lead">The masterclass is hosted by a project manager whose work sits at the intersection of strategy, structure, funding, and execution.</p>
+
+  <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:40px;align-items:center;margin-top:60px">
+    <div style="background:var(--bg-elev);border:1px solid var(--border-warm);border-radius:18px;padding:16px;box-shadow:0 30px 70px rgba(0,0,0,0.35)">
+      <div style="position:relative;overflow:hidden;border-radius:14px;aspect-ratio:4/5;background:var(--surface)">
+        <img src="/photos/amara-4.jpg" alt="Anna Ajibade" style="width:100%;height:100%;object-fit:cover;object-position:center 12%;transform:scale(1.08)">
+      </div>
+    </div>
+
+    <div>
+      <div style="font-family:var(--serif);font-size:clamp(34px,4.4vw,54px);font-weight:400;line-height:1.05;letter-spacing:-0.02em;color:var(--text);margin-bottom:12px">Anna Ajibade</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--gold-soft);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:24px">Senior Project Manager · Strategy and Execution Lead</div>
+
+      <p style="color:var(--text-dim);font-size:15px;line-height:1.8;margin-bottom:18px">Anna Ajibade is a senior-level project manager focused on designing, coordinating, and executing high-impact initiatives across education, youth development, leadership, and social impact spaces.</p>
+      <p style="color:var(--text-dim);font-size:15px;line-height:1.8;margin-bottom:18px">Her work spans project architecture, partnerships, funding mobilisation, stakeholder coordination, and delivery systems that move ideas from concept into measurable execution.</p>
+      <p style="color:var(--text-dim);font-size:15px;line-height:1.8">Through Dreamers to Doers, she brings together practical frameworks, real-world experience, and a clear Pan-African lens to help participants build with more structure, confidence, and results.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px">
+        <div style="padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev)">
+          <div style="font-family:var(--serif);font-size:28px;color:var(--text);line-height:1;margin-bottom:8px">150+</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase">Projects Delivered</div>
+        </div>
+        <div style="padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev)">
+          <div style="font-family:var(--serif);font-size:28px;color:var(--text);line-height:1;margin-bottom:8px">USD 20,000</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase">Funding Mobilised</div>
+        </div>
+        <div style="padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev)">
+          <div style="font-family:var(--serif);font-size:28px;color:var(--text);line-height:1;margin-bottom:8px">3+</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase">Years Focused Delivery</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section class="form-section" id="register" style="max-width:none;padding:0">
+  <div class="form-wrap">
+    <div class="form-left">
+      <h2>Secure your seat. <em>Start building.</em></h2>
+      <p>100 seats. Once they're gone, they're gone. Register at the early bird rate of <strong style="color:var(--gold)">₦10,000</strong> before June 1st — full price is ₦20,000.</p>
+      <ul class="form-bullets">
+        <li>Event access link sent directly to your email</li>
+        <li>Join the exclusive participant community</li>
+        <li>3-day full curriculum, live sessions</li>
+        <li>Post-program Dreamers to Doers Network access</li>
+      </ul>
+    </div>
+
+    <div class="form-card">
+      <span class="form-card-tag">▸ Registration</span>
+      <h3>Claim your seat</h3>
+      <div class="sub">Dreamers to Doers · June 2025 · ₦10,000 Early Bird</div>
+
+      <div class="field-row">
+        <div class="field"><label>First Name</label><input type="text" id="f-first" placeholder="e.g. Amaka" required></div>
+        <div class="field"><label>Last Name</label><input type="text" id="f-last" placeholder="e.g. Obi" required></div>
+      </div>
+      <div class="field"><label>Email Address</label><input type="email" id="f-email" placeholder="you@domain.com" required></div>
+      <div class="field"><label>WhatsApp Number (with country code)</label><input type="tel" id="f-phone" placeholder="+234 800 000 0000"></div>
+      <div class="field">
+        <label>I am a...</label>
+        <select id="f-category" required>
+          <option value="" disabled selected>Select your category</option>
+          <option>University Student</option>
+          <option>Early-Career Professional</option>
+          <option>NGO / Social Enterprise Founder</option>
+          <option>Event Planner / Program Coordinator</option>
+          <option>Aspiring Changemaker</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Country</label><input type="text" id="f-country" placeholder="e.g. Nigeria"></div>
+
+      <button class="form-submit" onclick="handleSubmit()">Secure My Seat — ₦10,000 →</button>
+
+      <div class="waitlist-divider">or</div>
+
+      <a href="https://t.me/+yourtelegramlink" target="_blank" class="waitlist-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Join waitlist
+      </a>
+
+      <div class="form-fine">We respect your privacy. Details sent to your email only.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div style="font-family:var(--serif);font-size:22px;font-weight:400;color:var(--text);margin-bottom:8px">Dreamers <em style="font-style:italic;color:var(--gold-soft)">to Doers</em></div>
+      <p class="footer-tagline">From vision to execution — in 72 hours.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="#curriculum">Curriculum</a></li>
+        <li><a href="#who">Who It's For</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#register">Register</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Event Details</h5>
+      <ul>
+        <li><a href="#">June 19 – 21, 2025</a></li>
+        <li><a href="#">6:00 PM – 10:00 PM WAT</a></li>
+        <li><a href="#">Virtual · Zoom</a></li>
+        <li><a href="#">100 Seats Only</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Dreamers to Doers · Pan-African Leadership Masterclass</div>
+    <div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+  </div>
+</footer>
+
+</main>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-card">
+    <div class="success-check">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>You're <em>registered.</em></h2>
+    <p class="primary-note">Your seat is secured. We'll send all event details and your Zoom access link to your inbox shortly.</p>
+    <div class="redirect-bar">
+      <div class="spinner"></div>
+      <span>Redirecting you to the Telegram community</span>
+    </div>
+    <p class="manual-link">Not redirected? <a href="https://t.me/+yourtelegramlink" target="_blank">Click here to join the group</a>.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var target=new Date('2025-06-01T23:59:59+01:00').getTime();
+  var dEl=document.getElementById('cd-d'),hEl=document.getElementById('cd-h'),mEl=document.getElementById('cd-m'),sEl=document.getElementById('cd-s');
+  function pad(n){return(n<10?'0':'')+n}
+  function tick(){
+    var diff=Math.max(0,target-Date.now());
+    var d=Math.floor(diff/86400000);diff%=86400000;
+    var h=Math.floor(diff/3600000);diff%=3600000;
+    var m=Math.floor(diff/60000);diff%=60000;
+    var s=Math.floor(diff/1000);
+    if(dEl)dEl.textContent=pad(d);
+    if(hEl)hEl.textContent=pad(h);
+    if(mEl)mEl.textContent=pad(m);
+    if(sEl)sEl.textContent=pad(s);
+  }
+  tick();setInterval(tick,1000);
+})();
+
+function handleSubmit(){
+  var first=document.getElementById('f-first').value.trim();
+  var email=document.getElementById('f-email').value.trim();
+  var cat=document.getElementById('f-category').value;
+  if(!first||!email||!cat){alert('Please fill in your name, email, and category.');return;}
+  // TODO: Wire to Formspree / Google Forms / your backend
+  var overlay=document.getElementById('success-overlay');
+  overlay.classList.add('active');
+  document.body.style.overflow='hidden';
+  setTimeout(function(){window.location.href='https://t.me/+yourtelegramlink';},3000);
+}
+</script>
+<script src="./enhancements.js" defer></script>
+</body>
+</html>
