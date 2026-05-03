@@ -4,6 +4,14 @@
     {
       "source": "/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/facilitators",
+      "destination": "/facilitators.html"
+    },
+    {
+      "source": "/facilitators/",
+      "destination": "/facilitators.html"
     }
   ]
 }

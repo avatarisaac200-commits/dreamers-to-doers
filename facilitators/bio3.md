@@ -1,0 +1,9 @@
+Temitayo Femi MATTHEW is a dedicated youth advocate committed to advancing the health and rights of children, adolescents, and young people. He serves as the Executive Director of the End Harmful Practices Initiative (EHPI) Nigeria a youth-led nonprofit working to eliminate all forms of harmful practices amongst vulnerable populations and build safer societies. He is a budding medical practitioner who earned his Bachelor of Medicine and Bachelor of Surgery degree from the prestigious Obafemi Awolowo University, Ile-Ife.
+ 
+During his undergraduate years, Temitayo served as Coordinating Officer/President of the Antimicrobial Resistance Club of Obafemi Awolowo University from 2023 to 2025 demonstrating a keen focus on one of the most pressing issues in global health. He also served as President of the Medical Students’ Association of the same institution in 2024.
+ 
+At the national level, he served the Nigerian Medical Students' Association (NiMSA) in dual capacities: as National Public Health Officer in 2022 and as Technical Officer on Infectious Diseases in 2021, contributing meaningfully to the association's health policy and advocacy agenda.
+ 
+Beyond Nigerian borders, Temitayo has served as a delegate to conferences & meetings of the International Federation of Medical Students' Associations (IFMSA) across three continents, where he actively contributed to international policy discussions and shaped international discourse on students’ health advocacy.
+ 
+Through his work at the intersection of medicine, global health, and community development, Temitayo Femi Matthew continues to champion the well-being of the most vulnerable — embodying the belief that the next generation of healthcare leaders must also be fearless advocates for change.

@@ -45,7 +45,8 @@ function escapeHtml(text) {
   return text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function renderBioMarkdown(markdown) {
@@ -83,17 +84,21 @@ async function injectFacilitators() {
   const bios = await Promise.all(facilitators.map((item) => readBio(item.bioFile)));
   const cards = facilitators
     .map((facilitator, index) => {
-      const bio =
-        renderBioMarkdown(bios[index]) || "<p>Bio coming soon.</p>";
+      const bio = renderBioMarkdown(bios[index]) || "<p>Bio coming soon.</p>";
 
       return `
-        <article class="facilitator-card">
+        <article
+          class="facilitator-card"
+          tabindex="0"
+          role="button"
+          aria-label="Open bio for ${facilitator.name}"
+          data-facilitator-trigger
+          data-name="${escapeHtml(facilitator.name)}"
+          data-image="${facilitator.image}"
+          data-bio="${escapeHtml(bio)}"
+        >
           <div class="facilitator-photo">
             <img src="${facilitator.image}" alt="${facilitator.name}">
-          </div>
-          <div>
-            <div class="facilitator-name">${facilitator.name}</div>
-            <div class="facilitator-bio">${bio}</div>
           </div>
         </article>
       `;
@@ -105,11 +110,78 @@ async function injectFacilitators() {
   section.innerHTML = `
     <div class="section-tag">08 · Facilitators</div>
     <h2 class="section-title">Meet the <em>facilitators.</em></h2>
-    <p class="section-lead">A lineup of facilitators bringing real-world perspectives across leadership, public health, execution, and impact-driven work.</p>
+    <p class="section-lead">A lineup of facilitators bringing real-world perspectives across leadership, public health, execution, and impact-driven work. Click any photo to read the bio.</p>
     <div class="facilitators-grid">${cards}</div>
+    <div class="facilitator-modal" id="facilitator-modal" aria-hidden="true">
+      <div class="facilitator-modal-card">
+        <button class="success-close" id="facilitator-modal-close" type="button" aria-label="Close">X</button>
+        <div class="facilitator-modal-grid">
+          <div class="facilitator-modal-photo">
+            <img id="facilitator-modal-image" src="" alt="">
+          </div>
+          <div>
+            <div class="facilitator-modal-label">Facilitator Bio</div>
+            <div class="facilitator-modal-name" id="facilitator-modal-name"></div>
+            <div class="facilitator-bio" id="facilitator-modal-bio"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   `;
 
   registerSection.parentNode.insertBefore(section, registerSection);
+  setupFacilitatorModal();
+}
+
+function setupFacilitatorModal() {
+  const modal = document.getElementById("facilitator-modal");
+  const closeButton = document.getElementById("facilitator-modal-close");
+  const nameEl = document.getElementById("facilitator-modal-name");
+  const imageEl = document.getElementById("facilitator-modal-image");
+  const bioEl = document.getElementById("facilitator-modal-bio");
+
+  if (!modal || !closeButton || !nameEl || !imageEl || !bioEl) return;
+
+  const closeModal = () => {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  };
+
+  const openModal = (trigger) => {
+    const name = trigger.getAttribute("data-name") || "";
+    const image = trigger.getAttribute("data-image") || "";
+    const bio = trigger.getAttribute("data-bio") || "<p>Bio coming soon.</p>";
+
+    nameEl.textContent = name;
+    imageEl.src = image;
+    imageEl.alt = name;
+    bioEl.innerHTML = bio;
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  };
+
+  document.querySelectorAll("[data-facilitator-trigger]").forEach((trigger) => {
+    trigger.addEventListener("click", () => openModal(trigger));
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openModal(trigger);
+      }
+    });
+  });
+
+  closeButton.addEventListener("click", closeModal);
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("active")) {
+      closeModal();
+    }
+  });
 }
 
 function setText(selector, value) {
@@ -128,13 +200,12 @@ function updateStaticContent() {
 
   document.querySelectorAll(".cl-val").forEach((node) => {
     node.textContent = normalizeText(node.textContent)
-      .replace("June 19 — 21, 2025", "June 19 - 21, 2026")
-      .replace("June 19 – 21, 2025", "June 19 - 21, 2026");
+      .replace(/2025/g, "2026");
   });
 
   const timeTitle = document.querySelectorAll(".section-title")[2];
   if (timeTitle) {
-    timeTitle.innerHTML = 'Clear your calendar. <em>June 19 - 21, 2026.</em>';
+    timeTitle.innerHTML = "Clear your calendar. <em>June 19 - 21, 2026.</em>";
   }
 
   const timeDates = document.querySelector(".time-cell-value");
@@ -147,7 +218,7 @@ function updateStaticContent() {
     const tag = hostSection.querySelector(".section-tag");
     if (tag) tag.textContent = "07 · Covener";
     const heading = hostSection.querySelector(".section-title");
-    if (heading) heading.innerHTML = 'Meet your <em>covener.</em>';
+    if (heading) heading.innerHTML = "Meet your <em>covener.</em>";
     const lead = hostSection.querySelector(".section-lead");
     if (lead) {
       lead.textContent =
@@ -219,7 +290,7 @@ function setupSuccessOverlay() {
     button.className = "success-close";
     button.type = "button";
     button.setAttribute("aria-label", "Close");
-    button.textContent = "×";
+    button.textContent = "X";
     button.addEventListener("click", () => {
       document.getElementById("success-overlay")?.classList.remove("active");
       document.body.style.overflow = "";
@@ -278,5 +349,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupCountdown();
   setupSuccessOverlay();
   setupFormHandler();
-  await injectFacilitators();
 });
