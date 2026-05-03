@@ -41,6 +41,47 @@ function listProjectImages(projectDir, projectSlug) {
     }));
 }
 
+function collectProjectGroups(baseDir, facilitatorSlug, includeLooseImages = false) {
+  const entries = fs.readdirSync(baseDir, { withFileTypes: true });
+  const groups = [];
+
+  if (includeLooseImages) {
+    const imageFiles = entries
+      .filter((entry) => entry.isFile())
+      .filter((entry) => /\.(png|jpe?g|webp|gif)$/i.test(entry.name));
+
+    if (imageFiles.length > 0) {
+      groups.push({
+        title: "Featured images",
+        images: imageFiles.map((entry) => ({
+          name: entry.name,
+          src: `/facilitators/Impact-footprints/${facilitatorSlug}/${encodeURIComponent(
+            path.basename(baseDir)
+          )}/${encodeURIComponent(entry.name)}`,
+        })),
+      });
+    }
+  }
+
+  entries
+    .filter((entry) => entry.isDirectory())
+    .forEach((entry) => {
+      const projectDir = path.join(baseDir, entry.name);
+      const images = listProjectImages(projectDir, facilitatorSlug);
+
+      if (images.length > 0) {
+        groups.push({
+          title: entry.name,
+          images,
+        });
+      }
+
+      groups.push(...collectProjectGroups(projectDir, facilitatorSlug, false));
+    });
+
+  return groups;
+}
+
 function readImpactFootprints(rootDir) {
   const impactRoot = path.join(rootDir, "facilitators", "Impact-footprints");
 
@@ -49,17 +90,7 @@ function readImpactFootprints(rootDir) {
     let projects = [];
 
     if (fs.existsSync(facilitatorDir)) {
-      projects = fs
-        .readdirSync(facilitatorDir, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory())
-        .map((entry) => {
-          const projectDir = path.join(facilitatorDir, entry.name);
-          return {
-            title: entry.name,
-            images: listProjectImages(projectDir, facilitator.impactFolder),
-          };
-        })
-        .filter((project) => project.images.length > 0);
+      projects = collectProjectGroups(facilitatorDir, facilitator.impactFolder, true);
     }
 
     return {
