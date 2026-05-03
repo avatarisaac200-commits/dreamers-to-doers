@@ -24,6 +24,8 @@ http
         ? "/index.html"
         : urlPath === "/facilitators" || urlPath === "/facilitators/"
           ? "/facilitators.html"
+          : urlPath === "/covener" || urlPath === "/covener/"
+            ? "/covener.html"
           : urlPath;
     const filePath = path.normalize(path.join(root, reqPath));
 

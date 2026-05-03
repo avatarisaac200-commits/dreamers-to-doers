@@ -12,6 +12,14 @@
     {
       "source": "/facilitators/",
       "destination": "/facilitators.html"
+    },
+    {
+      "source": "/covener",
+      "destination": "/covener.html"
+    },
+    {
+      "source": "/covener/",
+      "destination": "/covener.html"
     }
   ]
 }

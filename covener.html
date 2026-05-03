@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Covener | Dreamers to Doers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@300;400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+<style>
+  .page-shell{position:relative;z-index:2}
+  .covener-page{
+    min-height:100vh;
+    max-width:1440px;
+    margin:0 auto;
+    padding:140px 48px 80px;
+  }
+  .covener-intro{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:40px;
+    align-items:end;
+    margin-bottom:56px;
+  }
+  .covener-kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--gold-soft);
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .covener-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .covener-card{
+    display:grid;
+    grid-template-columns:0.92fr 1.08fr;
+    gap:40px;
+    align-items:center;
+    margin-top:16px;
+  }
+  .covener-photo-shell{
+    background:var(--bg-elev);
+    border:1px solid var(--border-warm);
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.35);
+  }
+  .covener-photo{
+    position:relative;
+    overflow:hidden;
+    border-radius:14px;
+    aspect-ratio:4/5;
+    background:var(--surface);
+  }
+  .covener-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 12%;
+    transform:scale(1.08);
+    display:block;
+  }
+  .covener-name{
+    font-family:var(--serif);
+    font-size:clamp(34px,4.4vw,54px);
+    font-weight:400;
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    color:var(--text);
+    margin-bottom:12px;
+  }
+  .covener-role{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--gold-soft);
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    margin-bottom:24px;
+  }
+  .covener-copy{
+    color:var(--text-dim);
+    font-size:15px;
+    line-height:1.8;
+    margin-bottom:18px;
+  }
+  .covener-metrics{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:32px;
+  }
+  .covener-metric{
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--bg-elev);
+  }
+  .covener-metric-num{
+    font-family:var(--serif);
+    font-size:28px;
+    color:var(--text);
+    line-height:1;
+    margin-bottom:8px;
+  }
+  .covener-metric-label{
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--text-dim);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  @media(max-width:1024px){
+    .covener-page{padding:120px 24px 64px}
+    .covener-intro{grid-template-columns:1fr;gap:24px}
+    .covener-actions{justify-content:flex-start}
+    .covener-card{grid-template-columns:1fr;gap:28px}
+  }
+  @media(max-width:640px){
+    .covener-metrics{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="noise"></div>
+
+<nav>
+  <a href="/" class="nav-brand">Dreamers <em>to Doers</em></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/facilitators">Facilitators</a></li>
+    <li><a href="/#register" class="nav-cta">Register Now</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section class="covener-page">
+    <div class="covener-intro">
+      <div>
+        <div class="covener-kicker">Dreamers to Doers / Covener</div>
+        <h1 class="section-title">Meet your <em>covener.</em></h1>
+        <p class="section-lead">The masterclass is convened by a project manager whose work sits at the intersection of strategy, structure, funding, and execution.</p>
+      </div>
+      <div class="covener-actions">
+        <a href="/" class="btn-secondary">Back Home</a>
+        <a href="/#register" class="btn-primary">Register Now</a>
+      </div>
+    </div>
+
+    <div class="covener-card">
+      <div class="covener-photo-shell">
+        <div class="covener-photo">
+          <img src="./amara-4.jpg" alt="Anna Ajibade">
+        </div>
+      </div>
+
+      <div>
+        <div class="covener-name">Anna Ajibade</div>
+        <div class="covener-role">Senior Project Manager / Strategy and Execution Lead</div>
+
+        <p class="covener-copy">Anna Ajibade is a senior-level project manager focused on designing, coordinating, and executing high-impact initiatives across education, youth development, leadership, and social impact spaces.</p>
+        <p class="covener-copy">Her work spans project architecture, partnerships, funding mobilisation, stakeholder coordination, and delivery systems that move ideas from concept into measurable execution.</p>
+        <p class="covener-copy">Through Dreamers to Doers, she brings together practical frameworks, real-world experience, and a clear Pan-African lens to help participants build with more structure, confidence, and results.</p>
+
+        <div class="covener-metrics">
+          <div class="covener-metric">
+            <div class="covener-metric-num">150+</div>
+            <div class="covener-metric-label">Projects Delivered</div>
+          </div>
+          <div class="covener-metric">
+            <div class="covener-metric-num">USD 20,000</div>
+            <div class="covener-metric-label">Funding Mobilised</div>
+          </div>
+          <div class="covener-metric">
+            <div class="covener-metric-num">3+</div>
+            <div class="covener-metric-label">Years Focused Delivery</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

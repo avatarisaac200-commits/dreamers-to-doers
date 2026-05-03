@@ -75,7 +75,7 @@ function setupFacilitatorModal() {
   const openModal = (trigger) => {
     const name = trigger.getAttribute("data-name") || "";
     const image = trigger.getAttribute("data-image") || "";
-    const bio = trigger.getAttribute("data-bio") || "<p>Bio coming soon.</p>";
+    const bio = trigger.getAttribute("data-bio") || "<p>Full profile details will be shared soon.</p>";
 
     nameEl.textContent = name;
     imageEl.src = image;
@@ -116,7 +116,7 @@ async function renderFacilitatorsPage() {
 
   grid.innerHTML = facilitators
     .map((facilitator, index) => {
-      const bio = renderBioMarkdown(bios[index]) || "<p>Bio coming soon.</p>";
+      const bio = renderBioMarkdown(bios[index]) || "<p>Full profile details will be shared soon.</p>";
 
       return `
         <article
