@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Impact Footprints | Dreamers to Doers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+<style>
+  .page-shell{position:relative;z-index:2}
+  .impact-page{min-height:100vh;max-width:1440px;margin:0 auto;padding:140px 48px 80px}
+  .impact-intro{display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:end;margin-bottom:56px}
+  .impact-kicker{font-family:var(--mono);font-size:11px;color:var(--gold-soft);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:18px}
+  .impact-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+  .impact-list{display:grid;gap:36px}
+  .impact-card{display:grid;grid-template-columns:240px 1fr;gap:28px;padding:24px;background:rgba(9,18,36,0.94);border:1px solid var(--border);border-radius:20px;box-shadow:0 28px 70px rgba(0,0,0,0.22)}
+  .impact-photo{overflow:hidden;border-radius:16px;background:var(--surface);aspect-ratio:4/5}
+  .impact-photo img{width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block}
+  .impact-name{font-family:var(--serif);font-size:clamp(30px,4vw,44px);font-weight:400;line-height:1.04;letter-spacing:-0.02em;margin-bottom:10px}
+  .impact-highlight{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:var(--gold-glow);border:1px solid var(--gold-dim);font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:22px}
+  .impact-highlight::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+  .impact-empty{color:var(--text-dim);font-size:15px;line-height:1.75;padding:16px 18px;border:1px dashed var(--border-warm);border-radius:14px;background:rgba(8,17,31,0.56)}
+  .impact-projects{display:grid;gap:24px}
+  .impact-project{padding-top:4px}
+  .impact-project-title{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:-0.01em;margin-bottom:14px;color:var(--text)}
+  .impact-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .impact-gallery-item{overflow:hidden;border-radius:14px;border:1px solid rgba(96,165,250,0.16);background:var(--surface);aspect-ratio:4/3}
+  .impact-gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+  .impact-loading,.impact-error{color:var(--text-dim);font-size:15px;line-height:1.7;padding:24px;border:1px dashed var(--border-warm);border-radius:16px;background:rgba(8,17,31,0.56)}
+  @media(max-width:1024px){
+    .impact-page{padding:120px 24px 64px}
+    .impact-intro{grid-template-columns:1fr;gap:24px}
+    .impact-actions{justify-content:flex-start}
+    .impact-card{grid-template-columns:1fr}
+  }
+  @media(max-width:760px){
+    .impact-gallery{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:560px){
+    .impact-gallery{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="noise"></div>
+
+<nav>
+  <a href="/" class="nav-brand">Dreamers <em>to Doers</em></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/facilitators">Facilitators</a></li>
+    <li><a href="/covener">Covener</a></li>
+    <li><a href="/#register" class="nav-cta">Register Now</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section class="impact-page">
+    <div class="impact-intro">
+      <div>
+        <div class="impact-kicker">Dreamers to Doers / Impact Footprints</div>
+        <h1 class="section-title">Impact <em>footprints.</em></h1>
+        <p class="section-lead">A visual record of the projects, events, and community work each facilitator has helped move from idea to measurable execution.</p>
+      </div>
+      <div class="impact-actions">
+        <a href="/facilitators" class="btn-secondary">Back to Facilitators</a>
+        <a href="/#register" class="btn-primary">Register Now</a>
+      </div>
+    </div>
+
+    <div class="impact-list" id="impact-list">
+      <div class="impact-loading">Loading impact footprints...</div>
+    </div>
+  </section>
+</main>
+
+<script src="./impact-footprints-page.js" defer></script>
+</body>
+</html>

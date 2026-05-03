@@ -259,6 +259,7 @@ function setupCountdown() {
   const hEl = document.getElementById("cd-h");
   const mEl = document.getElementById("cd-m");
   const sEl = document.getElementById("cd-s");
+  const separators = document.querySelectorAll(".c-sep");
 
   function pad(n) {
     return (n < 10 ? "0" : "") + n;
@@ -277,10 +278,72 @@ function setupCountdown() {
     if (hEl) hEl.textContent = pad(h);
     if (mEl) mEl.textContent = pad(m);
     if (sEl) sEl.textContent = pad(s);
+    separators.forEach((separator) => {
+      separator.style.opacity = s % 2 === 0 ? "0.72" : "0.3";
+    });
   }
 
   tick();
   window.setInterval(tick, 1000);
+}
+
+function setupScrollReveal() {
+  const groups = [
+    ".stats .stat-item",
+    ".problem-wrap > *",
+    "#curriculum .section-tag, #curriculum .section-title, #curriculum .section-lead, #curriculum .day-card",
+    ".time-band .time-cell, .countdown-row",
+    "#who .section-tag, #who .section-title, #who .section-lead, #who .who-card",
+    ".why-wrap .section-tag, .why-wrap .section-title, .why-wrap .section-lead, .why-item",
+    ".outcomes-grid .outcome-cell, .outcomes-grid + *",
+    "#host .section-tag, #host .section-title, #host .section-lead, #host img, #host p, #host [style*='Projects Delivered'], #host [style*='Funding Mobilised'], #host [style*='Years Focused Delivery'], #host [style*='Anna Ajibade'], #host [style*='Strategy and Execution Lead']",
+    "#register .form-left > *, #register .form-card",
+    "footer .footer-inner > *, footer .footer-bottom > *"
+  ];
+
+  const uniqueNodes = new Set();
+  groups.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((node) => {
+      if (node.closest(".hero")) return;
+      uniqueNodes.add(node);
+    });
+  });
+
+  const nodes = Array.from(uniqueNodes);
+  if (!nodes.length) return;
+
+  nodes.forEach((node) => {
+    node.classList.add("reveal-on-scroll");
+  });
+
+  if (!("IntersectionObserver" in window)) {
+    nodes.forEach((node) => node.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: window.innerWidth < 640 ? 0.08 : 0.14,
+      rootMargin: window.innerWidth < 640 ? "0px 0px -6% 0px" : "0px 0px -10% 0px",
+    }
+  );
+
+  groups.forEach((selector) => {
+    const groupNodes = Array.from(document.querySelectorAll(selector)).filter(
+      (node) => !node.closest(".hero")
+    );
+    groupNodes.forEach((node, index) => {
+      node.style.transitionDelay = `${Math.min(index, 5) * 70}ms`;
+      observer.observe(node);
+    });
+  });
 }
 
 function setupSuccessOverlay() {
@@ -347,6 +410,7 @@ function setupFormHandler() {
 document.addEventListener("DOMContentLoaded", async () => {
   updateStaticContent();
   setupCountdown();
+  setupScrollReveal();
   setupSuccessOverlay();
   setupFormHandler();
 });

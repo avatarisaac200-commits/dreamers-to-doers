@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { handleNodeRequest } = require("./api/impact-footprints");
 
 const root = __dirname;
 const port = process.env.PORT || 3000;
@@ -19,11 +20,19 @@ const types = {
 http
   .createServer((req, res) => {
     const urlPath = decodeURIComponent((req.url || "/").split("?")[0]);
+
+    if (urlPath === "/api/impact-footprints") {
+      handleNodeRequest(req, res, root);
+      return;
+    }
+
     const reqPath =
       urlPath === "/"
         ? "/index.html"
         : urlPath === "/facilitators" || urlPath === "/facilitators/"
           ? "/facilitators.html"
+          : urlPath === "/impact-footprints" || urlPath === "/impact-footprints/"
+            ? "/impact-footprints.html"
           : urlPath === "/covener" || urlPath === "/covener/"
             ? "/covener.html"
           : urlPath;

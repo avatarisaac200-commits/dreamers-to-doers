@@ -20,6 +20,14 @@
     {
       "source": "/covener/",
       "destination": "/covener.html"
+    },
+    {
+      "source": "/impact-footprints",
+      "destination": "/impact-footprints.html"
+    },
+    {
+      "source": "/impact-footprints/",
+      "destination": "/impact-footprints.html"
     }
   ]
 }
