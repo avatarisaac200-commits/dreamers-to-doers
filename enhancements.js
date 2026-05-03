@@ -134,7 +134,7 @@ function updateStaticContent() {
 
   const timeTitle = document.querySelectorAll(".section-title")[2];
   if (timeTitle) {
-    timeTitle.innerHTML = 'Clear your evenings. <em>June 19 - 21, 2026.</em>';
+    timeTitle.innerHTML = 'Clear your calendar. <em>June 19 - 21, 2026.</em>';
   }
 
   const timeDates = document.querySelector(".time-cell-value");
