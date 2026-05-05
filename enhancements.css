@@ -20,6 +20,50 @@
   box-shadow:0 24px 60px rgba(0,0,0,0.28);
 }
 
+.facilitator-card-meta{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:16px;
+}
+
+.facilitator-card-name{
+  font-family:var(--serif);
+  font-size:24px;
+  font-weight:400;
+  color:var(--text);
+  letter-spacing:-0.02em;
+}
+
+.facilitator-card-tag,
+.facilitator-modal-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:var(--gold-glow);
+  border:1px solid var(--gold-dim);
+  color:var(--gold-soft);
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+}
+
+.facilitator-card-tag::before,
+.facilitator-modal-tag::before{
+  content:'';
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 10px var(--gold);
+  flex-shrink:0;
+}
+
 .facilitator-photo{
   position:relative;
   overflow:hidden;
@@ -125,6 +169,10 @@
   margin-bottom:18px;
 }
 
+.facilitator-modal-tag{
+  margin-bottom:18px;
+}
+
 .facilitator-bio p{
   color:var(--text-dim);
   font-size:14px;
@@ -169,6 +217,15 @@
 
   .facilitator-card{
     padding:14px;
+  }
+
+  .facilitator-card-meta{
+    gap:10px;
+    margin-top:14px;
+  }
+
+  .facilitator-card-name{
+    font-size:22px;
   }
 
   .facilitator-photo img{

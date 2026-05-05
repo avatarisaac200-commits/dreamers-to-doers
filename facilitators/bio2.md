@@ -1,4 +1,4 @@
-Olufolake Adegoke is a policy analyst and programme manager working at the intersection of governance, youth development, and social impact execution.
+Olufolake Adegoke is a policy analyst and programme manager with over **five years of experience** working at the intersection of governance, youth development, and social impact execution.
 
 With experience spanning multiple NGOs, she has led and supported programmes from concept to delivery, developing a practical understanding of what it takes to structure initiatives, mobilise resources, and sustain impact beyond ideas. Her work has consistently involved navigating funding realities, building partnerships, and aligning stakeholders to move projects forward.
 

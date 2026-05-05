@@ -6,6 +6,9 @@
     },
     "api/covener-impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
+    },
+    "api/convener-impact-footprints.js": {
+      "includeFiles": "facilitators/Impact-footprints/**"
     }
   },
   "rewrites": [
@@ -20,6 +23,14 @@
     {
       "source": "/facilitators/",
       "destination": "/facilitators.html"
+    },
+    {
+      "source": "/convener",
+      "destination": "/covener.html"
+    },
+    {
+      "source": "/convener/",
+      "destination": "/covener.html"
     },
     {
       "source": "/covener",

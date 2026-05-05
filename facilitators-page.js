@@ -3,21 +3,25 @@ const facilitators = [
     name: "Damilola Mogaji",
     image: "./facilitators/mogaji.jpg",
     bioFile: "./facilitators/bio4.md",
+    tag: "7+ years of experience",
   },
   {
     name: "Temitayo Femi Matthew",
     image: "./facilitators/matthew.jpg",
     bioFile: "./facilitators/bio3.md",
+    tag: "6+ years of experience",
   },
   {
     name: "Olufolake Zion Adegoke",
     image: "./facilitators/olufolake.jpeg",
     bioFile: "./facilitators/bio2.md",
+    tag: "5+ years of experience",
   },
   {
     name: "Ifeoluwa Oyewole",
     image: "./facilitators/ifeoluwa.jpeg",
     bioFile: "./facilitators/bio1.md",
+    tag: "10+ years of experience",
   },
 ];
 
@@ -61,10 +65,11 @@ function setupFacilitatorModal() {
   const modal = document.getElementById("facilitator-modal");
   const closeButton = document.getElementById("facilitator-modal-close");
   const nameEl = document.getElementById("facilitator-modal-name");
+  const tagEl = document.getElementById("facilitator-modal-tag");
   const imageEl = document.getElementById("facilitator-modal-image");
   const bioEl = document.getElementById("facilitator-modal-bio");
 
-  if (!modal || !closeButton || !nameEl || !imageEl || !bioEl) return;
+  if (!modal || !closeButton || !nameEl || !tagEl || !imageEl || !bioEl) return;
 
   const closeModal = () => {
     modal.classList.remove("active");
@@ -74,10 +79,12 @@ function setupFacilitatorModal() {
 
   const openModal = (trigger) => {
     const name = trigger.getAttribute("data-name") || "";
+    const tag = trigger.getAttribute("data-tag") || "";
     const image = trigger.getAttribute("data-image") || "";
     const bio = trigger.getAttribute("data-bio") || "<p>Full profile details will be shared soon.</p>";
 
     nameEl.textContent = name;
+    tagEl.textContent = tag;
     imageEl.src = image;
     imageEl.alt = name;
     bioEl.innerHTML = bio;
@@ -126,11 +133,16 @@ async function renderFacilitatorsPage() {
           aria-label="Open bio for ${facilitator.name}"
           data-facilitator-trigger
           data-name="${escapeHtml(facilitator.name)}"
+          data-tag="${escapeHtml(facilitator.tag)}"
           data-image="${facilitator.image}"
           data-bio="${escapeHtml(bio)}"
         >
           <div class="facilitator-photo">
             <img src="${facilitator.image}" alt="${facilitator.name}">
+          </div>
+          <div class="facilitator-card-meta">
+            <div class="facilitator-card-name">${escapeHtml(facilitator.name)}</div>
+            <div class="facilitator-card-tag">${escapeHtml(facilitator.tag)}</div>
           </div>
         </article>
       `;

@@ -216,9 +216,9 @@ function updateStaticContent() {
   const hostSection = document.getElementById("host");
   if (hostSection) {
     const tag = hostSection.querySelector(".section-tag");
-    if (tag) tag.textContent = "07 · Covener";
+    if (tag) tag.textContent = "07 · Convener";
     const heading = hostSection.querySelector(".section-title");
-    if (heading) heading.innerHTML = "Meet the <em>Covener.</em>";
+    if (heading) heading.innerHTML = "Meet the <em>Convener.</em>";
     const lead = hostSection.querySelector(".section-lead");
     if (lead) {
       lead.textContent =
@@ -414,3 +414,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupSuccessOverlay();
   setupFormHandler();
 });
+

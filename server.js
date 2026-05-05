@@ -27,7 +27,7 @@ http
       return;
     }
 
-    if (urlPath === "/api/covener-impact-footprints") {
+    if (urlPath === "/api/covener-impact-footprints" || urlPath === "/api/convener-impact-footprints") {
       handleCovenerImpactRequest(req, res, root);
       return;
     }
@@ -39,7 +39,7 @@ http
           ? "/facilitators.html"
           : urlPath === "/impact-footprints" || urlPath === "/impact-footprints/"
             ? "/impact-footprints.html"
-          : urlPath === "/covener" || urlPath === "/covener/"
+          : urlPath === "/convener" || urlPath === "/convener/" || urlPath === "/covener" || urlPath === "/covener/"
             ? "/covener.html"
           : urlPath;
     const filePath = path.normalize(path.join(root, reqPath));

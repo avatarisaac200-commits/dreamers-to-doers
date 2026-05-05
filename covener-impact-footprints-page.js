@@ -132,7 +132,7 @@ async function loadCovenerImpactFootprints() {
   if (!container) return;
 
   try {
-    const response = await fetch("/api/covener-impact-footprints");
+    const response = await fetch("/api/convener-impact-footprints");
     if (!response.ok) {
       throw new Error("Request failed");
     }
@@ -147,7 +147,7 @@ async function loadCovenerImpactFootprints() {
     container.innerHTML = covener.projects.map(renderProject).join("");
   } catch {
     container.innerHTML =
-      '<div class="covener-impact-error">Covener impact footprints could not be loaded right now. Please try again shortly.</div>';
+      '<div class="covener-impact-error">Convener impact footprints could not be loaded right now. Please try again shortly.</div>';
   }
 }
 

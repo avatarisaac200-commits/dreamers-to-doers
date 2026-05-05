@@ -14,7 +14,7 @@ Driven by her passion for cardiovascular health, \*\*she founded The Cardio Heal
 
 
 
-With over \*\*four years of leadership experience\*\*, Ifeoluwa has attended numerous programs and courses on \*\*leadership and people management\*\*,. Her exceptional contributions to healthcare, leadership, and advocacy have earned her multiple accolades, including \*\*the 25 Under 25 Award, Most Inspiring Young Person of the Year, Speaker of the Year, NiMSA SW Executive Award, Outstanding Award in Planning and Execution, and Most Influential Person Award\*\*, among others.  
+With over \*\*ten years of experience\*\*, Ifeoluwa has attended numerous programs and courses on \*\*leadership and people management\*\*. Her exceptional contributions to healthcare, leadership, and advocacy have earned her multiple accolades, including \*\*the 25 Under 25 Award, Most Inspiring Young Person of the Year, Speaker of the Year, NiMSA SW Executive Award, Outstanding Award in Planning and Execution, and Most Influential Person Award\*\*, among others.  
 
 
 
