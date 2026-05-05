@@ -41,11 +41,48 @@ function setupCovenerImpactLightbox() {
 
   if (!lightbox || !image || !closeButton) return;
 
+  let activeItems = [];
+  let activeIndex = -1;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const updateImage = () => {
+    const item = activeItems[activeIndex];
+    if (!item) return;
+
+    image.src = item.getAttribute("data-covener-impact-image") || "";
+    image.alt = item.getAttribute("data-covener-impact-alt") || "";
+  };
+
+  const open = (trigger) => {
+    const gallery = trigger.closest(".covener-impact-gallery");
+    activeItems = gallery ? Array.from(gallery.querySelectorAll("[data-covener-impact-image]")) : [trigger];
+    activeIndex = Math.max(activeItems.indexOf(trigger), 0);
+    updateImage();
+    lightbox.classList.add("active");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  };
+
+  const showNext = () => {
+    if (!activeItems.length) return;
+    activeIndex = (activeIndex + 1) % activeItems.length;
+    updateImage();
+  };
+
+  const showPrevious = () => {
+    if (!activeItems.length) return;
+    activeIndex = (activeIndex - 1 + activeItems.length) % activeItems.length;
+    updateImage();
+  };
+
   const close = () => {
     lightbox.classList.remove("active");
     lightbox.setAttribute("aria-hidden", "true");
     image.src = "";
     image.alt = "";
+    activeItems = [];
+    activeIndex = -1;
     document.body.style.overflow = "";
   };
 
@@ -53,11 +90,7 @@ function setupCovenerImpactLightbox() {
     const trigger = event.target.closest("[data-covener-impact-image]");
     if (!trigger) return;
 
-    image.src = trigger.getAttribute("data-covener-impact-image") || "";
-    image.alt = trigger.getAttribute("data-covener-impact-alt") || "";
-    lightbox.classList.add("active");
-    lightbox.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+    open(trigger);
   });
 
   closeButton.addEventListener("click", close);
@@ -65,10 +98,32 @@ function setupCovenerImpactLightbox() {
     if (event.target === lightbox) close();
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && lightbox.classList.contains("active")) {
-      close();
+  lightbox.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", (event) => {
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+
+    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+    if (deltaX < 0) {
+      showNext();
+    } else {
+      showPrevious();
     }
+  }, { passive: true });
+
+  document.addEventListener("keydown", (event) => {
+    if (!lightbox.classList.contains("active")) return;
+
+    if (event.key === "Escape") close();
+    if (event.key === "ArrowRight") showNext();
+    if (event.key === "ArrowLeft") showPrevious();
   });
 }
 
