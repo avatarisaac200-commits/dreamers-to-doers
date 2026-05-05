@@ -91,7 +91,7 @@
   }
   .covener-metrics{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(2,1fr);
     gap:14px;
     margin-top:32px;
   }
@@ -125,42 +125,42 @@
   }
   .covener-impact-list{
     display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:24px;
+    grid-template-columns:1fr;
+    gap:32px;
     margin-top:36px;
   }
   .covener-impact-project{
-    padding:24px;
+    padding:28px;
     border:1px solid var(--border);
-    border-radius:18px;
+    border-radius:26px;
     background:rgba(36,16,57,0.94);
     box-shadow:0 28px 70px rgba(0,0,0,0.18);
   }
   .covener-impact-project-title{
     font-family:var(--serif);
-    font-size:24px;
+    font-size:28px;
     font-weight:400;
     letter-spacing:-0.01em;
-    margin-bottom:16px;
+    margin-bottom:20px;
     color:var(--text);
   }
   .covener-impact-gallery{
     display:grid;
     grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:12px;
+    gap:18px;
   }
   .covener-impact-gallery-item{
     appearance:none;
     -webkit-appearance:none;
     overflow:hidden;
-    border-radius:22px;
+    border-radius:28px;
     border:none;
     padding:0;
     background:var(--surface);
-    aspect-ratio:1/1;
+    aspect-ratio:0.82/1;
     cursor:pointer;
     position:relative;
-    box-shadow:0 14px 30px rgba(0,0,0,0.16);
+    box-shadow:0 18px 36px rgba(0,0,0,0.18);
     transition:transform 0.24s ease,box-shadow 0.24s ease,filter 0.24s ease;
   }
   .covener-impact-gallery-item::after{
@@ -178,8 +178,8 @@
     transition:opacity 0.24s ease,transform 0.24s ease;
   }
   .covener-impact-gallery-item:hover{
-    transform:translateY(-4px) scale(1.03);
-    box-shadow:0 22px 38px rgba(66,22,110,0.24),0 0 0 1px rgba(242,231,253,0.16);
+    transform:translateY(-6px) scale(1.035);
+    box-shadow:0 28px 48px rgba(66,22,110,0.24),0 0 0 1px rgba(242,231,253,0.16);
     filter:saturate(1.06);
   }
   .covener-impact-gallery-item:hover::after{
@@ -256,11 +256,11 @@
     .covener-intro{grid-template-columns:1fr;gap:24px}
     .covener-actions{justify-content:flex-start}
     .covener-card{grid-template-columns:1fr;gap:28px}
-    .covener-impact-list{grid-template-columns:1fr}
+    .covener-impact-gallery{gap:14px}
   }
   @media(max-width:640px){
     .covener-metrics{grid-template-columns:1fr}
-    .covener-impact-gallery{gap:8px}
+    .covener-impact-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   }
 </style>
 </head>
@@ -312,10 +312,6 @@
 
         <div class="covener-metrics">
           <div class="covener-metric">
-            <div class="covener-metric-num">150+</div>
-            <div class="covener-metric-label">Projects Delivered</div>
-          </div>
-          <div class="covener-metric">
             <div class="covener-metric-num">USD 20,000</div>
             <div class="covener-metric-label">Funding Mobilised</div>
           </div>
@@ -330,7 +326,6 @@
     <div class="covener-impact-section">
       <div class="section-tag">Impact Footprints</div>
       <h2 class="section-title">Explore Anna's <em>impact footprints.</em></h2>
-      <p class="section-lead">Drop JPG or JPEG images into the project folders and they will automatically show up here on the covener page.</p>
 
       <div class="covener-impact-list" id="covener-impact-list">
         <div class="covener-impact-empty">Loading covener impact footprints...</div>
@@ -340,10 +335,11 @@
 </main>
 <div class="covener-impact-lightbox" id="covener-impact-lightbox" aria-hidden="true">
   <div class="covener-impact-lightbox-frame">
-    <button class="covener-impact-lightbox-close" id="covener-impact-lightbox-close" type="button" aria-label="Close image">×</button>
+    <button class="covener-impact-lightbox-close" id="covener-impact-lightbox-close" type="button" aria-label="Close image">&times;</button>
     <img class="covener-impact-lightbox-image" id="covener-impact-lightbox-image" src="" alt="">
   </div>
 </div>
 <script src="./covener-impact-footprints-page.js" defer></script>
 </body>
 </html>
+
