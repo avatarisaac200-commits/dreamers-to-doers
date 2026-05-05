@@ -8,15 +8,15 @@
   --accent:#f2e7fd;
   --serif:'Fraunces',Georgia,serif;--sans:'Inter Tight',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--display:'Orbitron','JetBrains Mono',monospace;
 }
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip;overscroll-behavior-x:none}
 body{background:
 linear-gradient(180deg, #12071d 0%, #1a0b29 45%, #2a1143 100%);
-color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased;touch-action:pan-y}
 ::selection{background:var(--gold);color:#42166e}
 
 .grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:80px 80px;opacity:0.5;mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%)}
 .noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-main{position:relative;z-index:2}
+main{position:relative;z-index:2;max-width:100%;overflow-x:clip}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(18,7,29,0.82);border-bottom:1px solid var(--border)}
@@ -239,6 +239,7 @@ footer{padding:80px 48px 40px;border-top:1px solid var(--border);background:var(
   nav{padding:14px 20px}
   .nav-links{display:none}
   .hero{grid-template-columns:1fr;gap:48px;padding:120px 24px 60px}
+  .grid-bg,.noise{position:absolute}
   .hero-visual{max-width:500px;margin:0 auto;width:100%}
   .floating-badge{position:relative;bottom:auto;left:auto;transform:none;margin:24px auto 0}
   .stats{padding:48px 24px}
