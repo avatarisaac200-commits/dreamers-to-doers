@@ -23,15 +23,53 @@ function renderProject(project) {
         ${project.images
           .map(
             (image) => `
-              <div class="covener-impact-gallery-item">
+              <button class="covener-impact-gallery-item" type="button" data-covener-impact-image="${image.src}" data-covener-impact-alt="${escapeHtml(project.title)}">
                 <img src="${image.src}" alt="${escapeHtml(project.title)}">
-              </div>
+              </button>
             `
           )
           .join("")}
       </div>
     </section>
   `;
+}
+
+function setupCovenerImpactLightbox() {
+  const lightbox = document.getElementById("covener-impact-lightbox");
+  const image = document.getElementById("covener-impact-lightbox-image");
+  const closeButton = document.getElementById("covener-impact-lightbox-close");
+
+  if (!lightbox || !image || !closeButton) return;
+
+  const close = () => {
+    lightbox.classList.remove("active");
+    lightbox.setAttribute("aria-hidden", "true");
+    image.src = "";
+    image.alt = "";
+    document.body.style.overflow = "";
+  };
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-covener-impact-image]");
+    if (!trigger) return;
+
+    image.src = trigger.getAttribute("data-covener-impact-image") || "";
+    image.alt = trigger.getAttribute("data-covener-impact-alt") || "";
+    lightbox.classList.add("active");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  });
+
+  closeButton.addEventListener("click", close);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) close();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && lightbox.classList.contains("active")) {
+      close();
+    }
+  });
 }
 
 async function loadCovenerImpactFootprints() {
@@ -59,5 +97,6 @@ async function loadCovenerImpactFootprints() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  setupCovenerImpactLightbox();
   await loadCovenerImpactFootprints();
 });

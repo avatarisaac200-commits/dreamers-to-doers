@@ -10,9 +10,9 @@ function renderProject(project) {
   const images = project.images
     .map(
       (image) => `
-        <div class="impact-gallery-item">
+        <button class="impact-gallery-item" type="button" data-impact-image="${image.src}" data-impact-alt="${escapeHtml(project.title)}">
           <img src="${image.src}" alt="${escapeHtml(project.title)}">
-        </div>
+        </button>
       `
     )
     .join("");
@@ -23,6 +23,44 @@ function renderProject(project) {
       <div class="impact-gallery">${images}</div>
     </section>
   `;
+}
+
+function setupImpactLightbox() {
+  const lightbox = document.getElementById("impact-lightbox");
+  const image = document.getElementById("impact-lightbox-image");
+  const closeButton = document.getElementById("impact-lightbox-close");
+
+  if (!lightbox || !image || !closeButton) return;
+
+  const close = () => {
+    lightbox.classList.remove("active");
+    lightbox.setAttribute("aria-hidden", "true");
+    image.src = "";
+    image.alt = "";
+    document.body.style.overflow = "";
+  };
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-impact-image]");
+    if (!trigger) return;
+
+    image.src = trigger.getAttribute("data-impact-image") || "";
+    image.alt = trigger.getAttribute("data-impact-alt") || "";
+    lightbox.classList.add("active");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  });
+
+  closeButton.addEventListener("click", close);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) close();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && lightbox.classList.contains("active")) {
+      close();
+    }
+  });
 }
 
 function renderFacilitator(facilitator) {
@@ -69,5 +107,6 @@ async function loadImpactFootprints() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+  setupImpactLightbox();
   await loadImpactFootprints();
 });
