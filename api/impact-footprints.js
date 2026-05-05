@@ -3,15 +3,9 @@ const path = require("path");
 
 const FACILITATORS = [
   {
-    name: "Ifeoluwa Oyewole",
-    image: "/facilitators/ifeoluwa.jpeg",
-    impactFolder: "Ifeoluwa",
-    highlight: "Over 20,000 USD funding mobilized.",
-  },
-  {
-    name: "Olufolake Zion Adegoke",
-    image: "/facilitators/olufolake.jpeg",
-    impactFolder: "Olufolake",
+    name: "Damilola Mogaji",
+    image: "/facilitators/mogaji.jpg",
+    impactFolder: "Damilola",
     highlight: "Over 20,000 USD funding mobilized.",
   },
   {
@@ -21,9 +15,15 @@ const FACILITATORS = [
     highlight: "Over 20,000 USD funding mobilized.",
   },
   {
-    name: "Damilola Mogaji",
-    image: "/facilitators/mogaji.jpg",
-    impactFolder: "Damilola",
+    name: "Olufolake Zion Adegoke",
+    image: "/facilitators/olufolake.jpeg",
+    impactFolder: "Olufolake",
+    highlight: "Over 20,000 USD funding mobilized.",
+  },
+  {
+    name: "Ifeoluwa Oyewole",
+    image: "/facilitators/ifeoluwa.jpeg",
+    impactFolder: "Ifeoluwa",
     highlight: "Over 20,000 USD funding mobilized.",
   },
 ];

@@ -1,13 +1,8 @@
 const facilitators = [
   {
-    name: "Ifeoluwa Oyewole",
-    image: "./facilitators/ifeoluwa.jpeg",
-    bioFile: "./facilitators/bio1.md",
-  },
-  {
-    name: "Olufolake Zion Adegoke",
-    image: "./facilitators/olufolake.jpeg",
-    bioFile: "./facilitators/bio2.md",
+    name: "Damilola Mogaji",
+    image: "./facilitators/mogaji.jpg",
+    bioFile: "./facilitators/bio4.md",
   },
   {
     name: "Temitayo Femi Matthew",
@@ -15,9 +10,14 @@ const facilitators = [
     bioFile: "./facilitators/bio3.md",
   },
   {
-    name: "Damilola Mogaji",
-    image: "./facilitators/mogaji.jpg",
-    bioFile: "./facilitators/bio4.md",
+    name: "Olufolake Zion Adegoke",
+    image: "./facilitators/olufolake.jpeg",
+    bioFile: "./facilitators/bio2.md",
+  },
+  {
+    name: "Ifeoluwa Oyewole",
+    image: "./facilitators/ifeoluwa.jpeg",
+    bioFile: "./facilitators/bio1.md",
   },
 ];
 

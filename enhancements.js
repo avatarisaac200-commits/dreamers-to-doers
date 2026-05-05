@@ -4,14 +4,9 @@ const WHATSAPP_GROUP_URL =
 
 const facilitators = [
   {
-    name: "Ifeoluwa Oyewole",
-    image: "./facilitators/ifeoluwa.jpeg",
-    bioFile: "./facilitators/bio1.md",
-  },
-  {
-    name: "Olufolake Zion Adegoke",
-    image: "./facilitators/olufolake.jpeg",
-    bioFile: "./facilitators/bio2.md",
+    name: "Damilola Mogaji",
+    image: "./facilitators/mogaji.jpg",
+    bioFile: "./facilitators/bio4.md",
   },
   {
     name: "Temitayo Femi Matthew",
@@ -19,9 +14,14 @@ const facilitators = [
     bioFile: "./facilitators/bio3.md",
   },
   {
-    name: "Damilola Mogaji",
-    image: "./facilitators/mogaji.jpg",
-    bioFile: "./facilitators/bio4.md",
+    name: "Olufolake Zion Adegoke",
+    image: "./facilitators/olufolake.jpeg",
+    bioFile: "./facilitators/bio2.md",
+  },
+  {
+    name: "Ifeoluwa Oyewole",
+    image: "./facilitators/ifeoluwa.jpeg",
+    bioFile: "./facilitators/bio1.md",
   },
 ];
 
@@ -218,7 +218,7 @@ function updateStaticContent() {
     const tag = hostSection.querySelector(".section-tag");
     if (tag) tag.textContent = "07 · Covener";
     const heading = hostSection.querySelector(".section-title");
-    if (heading) heading.innerHTML = "Meet your <em>covener.</em>";
+    if (heading) heading.innerHTML = "Meet the <em>Covener.</em>";
     const lead = hostSection.querySelector(".section-lead");
     if (lead) {
       lead.textContent =
@@ -233,7 +233,7 @@ function updateStaticContent() {
     link.textContent = text;
     if (link.href.includes("t.me/+yourtelegramlink")) {
       link.href = WHATSAPP_GROUP_URL;
-      link.textContent = "Join WhatsApp Group";
+      link.textContent = "Join Waitlist";
       link.target = "_blank";
     }
   });

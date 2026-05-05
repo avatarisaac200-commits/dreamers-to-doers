@@ -2,6 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { handleNodeRequest } = require("./api/impact-footprints");
+const { handleNodeRequest: handleCovenerImpactRequest } = require("./api/covener-impact-footprints");
 
 const root = __dirname;
 const port = process.env.PORT || 3000;
@@ -23,6 +24,11 @@ http
 
     if (urlPath === "/api/impact-footprints") {
       handleNodeRequest(req, res, root);
+      return;
+    }
+
+    if (urlPath === "/api/covener-impact-footprints") {
+      handleCovenerImpactRequest(req, res, root);
       return;
     }
 

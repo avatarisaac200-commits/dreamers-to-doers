@@ -115,14 +115,72 @@
     letter-spacing:0.1em;
     text-transform:uppercase;
   }
+  .covener-impact-section{
+    margin-top:72px;
+    padding-top:32px;
+    border-top:1px solid var(--border);
+  }
+  .covener-impact-section .section-lead{
+    max-width:760px;
+  }
+  .covener-impact-list{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:24px;
+    margin-top:36px;
+  }
+  .covener-impact-project{
+    padding:24px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:rgba(36,16,57,0.94);
+    box-shadow:0 28px 70px rgba(0,0,0,0.18);
+  }
+  .covener-impact-project-title{
+    font-family:var(--serif);
+    font-size:24px;
+    font-weight:400;
+    letter-spacing:-0.01em;
+    margin-bottom:16px;
+    color:var(--text);
+  }
+  .covener-impact-gallery{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+  }
+  .covener-impact-gallery-item{
+    overflow:hidden;
+    border-radius:14px;
+    border:1px solid rgba(242,231,253,0.16);
+    background:var(--surface);
+    aspect-ratio:4/3;
+  }
+  .covener-impact-gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .covener-impact-empty,.covener-impact-error{
+    color:var(--text-dim);
+    font-size:15px;
+    line-height:1.75;
+    padding:16px 18px;
+    border:1px dashed var(--border-warm);
+    border-radius:14px;
+    background:rgba(26,11,41,0.56);
+  }
   @media(max-width:1024px){
     .covener-page{padding:120px 24px 64px}
     .covener-intro{grid-template-columns:1fr;gap:24px}
     .covener-actions{justify-content:flex-start}
     .covener-card{grid-template-columns:1fr;gap:28px}
+    .covener-impact-list{grid-template-columns:1fr}
   }
   @media(max-width:640px){
     .covener-metrics{grid-template-columns:1fr}
+    .covener-impact-gallery{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -145,7 +203,7 @@
     <div class="covener-intro">
       <div>
         <div class="covener-kicker">Dreamers to Doers / Covener</div>
-        <h1 class="section-title">Meet your <em>covener.</em></h1>
+        <h1 class="section-title">Meet the <em>Covener.</em></h1>
         <p class="section-lead">The masterclass is convened by a project manager whose work sits at the intersection of strategy, structure, funding, and execution.</p>
       </div>
       <div class="covener-actions">
@@ -165,9 +223,12 @@
         <div class="covener-name">Anna Ajibade</div>
         <div class="covener-role">Senior Project Manager / Strategy and Execution Lead</div>
 
-        <p class="covener-copy">Anna Ajibade is a senior-level project manager focused on designing, coordinating, and executing high-impact initiatives across education, youth development, leadership, and social impact spaces.</p>
-        <p class="covener-copy">Her work spans project architecture, partnerships, funding mobilisation, stakeholder coordination, and delivery systems that move ideas from concept into measurable execution.</p>
-        <p class="covener-copy">Through Dreamers to Doers, she brings together practical frameworks, real-world experience, and a clear Pan-African lens to help participants build with more structure, confidence, and results.</p>
+        <p class="covener-copy">Anna Ajibade is a senior-level project manager and strategy execution lead focused on designing, coordinating, and delivering high-impact initiatives across education, youth development, leadership, and social impact spaces.</p>
+        <p class="covener-copy">Her expertise spans project architecture, strategic partnerships, stakeholder coordination, funding mobilisation, and execution systems that transform ideas from concept into measurable results.</p>
+        <p class="covener-copy">Among her notable works is the conceptualisation and successful execution of the Health Storytellers Summit, the first event of its kind at Obafemi Awolowo University. The landmark summit convened over 1,000 participants and featured Nigeria's foremost health storyteller, Aproko Doctor, creating a transformative platform that amplified conversations around healthcare communication, digital influence, and storytelling for impact.</p>
+        <p class="covener-copy">She is also the Founder and Executive Director of Afribloom, a nonprofit organisation operating at the intersection of education and leadership development, committed to ensuring that every African child has access to quality education, as well as the resources, exposure, and knowledge needed to harness their leadership potential.</p>
+        <p class="covener-copy">Under her leadership, Afribloom has successfully executed multiple outreach initiatives impacting over 3,500 secondary school students through educational interventions, career development programs, and leadership-focused engagements. The organisation currently provides full scholarship support to 15 out-of-school children, reinforcing its mission to bridge educational gaps and create pathways for long-term transformation.</p>
+        <p class="covener-copy">Her portfolio reflects a consistent track record of building initiatives that drive innovation, empower young leaders, and create scalable solutions for sustainable community advancement.</p>
 
         <div class="covener-metrics">
           <div class="covener-metric">
@@ -185,7 +246,18 @@
         </div>
       </div>
     </div>
+
+    <div class="covener-impact-section">
+      <div class="section-tag">Impact Footprints</div>
+      <h2 class="section-title">Explore Anna's <em>impact footprints.</em></h2>
+      <p class="section-lead">Drop JPG or JPEG images into the project folders and they will automatically show up here on the covener page.</p>
+
+      <div class="covener-impact-list" id="covener-impact-list">
+        <div class="covener-impact-empty">Loading covener impact footprints...</div>
+      </div>
+    </div>
   </section>
 </main>
+<script src="./covener-impact-footprints-page.js" defer></script>
 </body>
 </html>

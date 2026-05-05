@@ -3,6 +3,9 @@
   "functions": {
     "api/impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
+    },
+    "api/covener-impact-footprints.js": {
+      "includeFiles": "facilitators/Impact-footprints/**"
     }
   },
   "rewrites": [
