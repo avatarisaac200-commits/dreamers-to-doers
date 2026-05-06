@@ -39,7 +39,7 @@ http
           ? "/facilitators.html"
           : urlPath === "/impact-footprints" || urlPath === "/impact-footprints/"
             ? "/impact-footprints.html"
-          : urlPath === "/convener" || urlPath === "/convener/" || urlPath === "/covener" || urlPath === "/covener/"
+          : urlPath === "/Convener" || urlPath === "/Convener/" || urlPath === "/convener" || urlPath === "/convener/" || urlPath === "/covener" || urlPath === "/covener/"
             ? "/convener.html"
             : urlPath;
     const filePath = path.normalize(path.join(root, reqPath));

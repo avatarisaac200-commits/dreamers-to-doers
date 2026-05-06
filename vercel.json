@@ -25,6 +25,14 @@
       "destination": "/facilitators.html"
     },
     {
+      "source": "/Convener",
+      "destination": "/convener.html"
+    },
+    {
+      "source": "/Convener/",
+      "destination": "/convener.html"
+    },
+    {
       "source": "/convener",
       "destination": "/convener.html"
     },
