@@ -114,24 +114,31 @@ async function injectFacilitators() {
   const registerSection = document.getElementById("register");
   if (!registerSection) return;
 
-  const bios = await Promise.all(facilitators.map((item) => readBio(item.bioFile)));
+  const [bios] = await Promise.all([
+    Promise.all(facilitators.map((item) => readBio(item.bioFile))),
+    loadImpactFootprints(),
+  ]);
+
   const cards = facilitators
     .map((facilitator, index) => {
       const bio = renderBioMarkdown(bios[index]) || "<p>Bio coming soon.</p>";
 
       return `
-        <article
-          class="facilitator-card"
-          tabindex="0"
-          role="button"
-          aria-label="Open bio for ${facilitator.name}"
-          data-facilitator-trigger
-          data-name="${escapeHtml(facilitator.name)}"
-          data-image="${facilitator.image}"
-          data-bio="${escapeHtml(bio)}"
-        >
+        <article class="facilitator-card facilitator-card-expanded">
           <div class="facilitator-photo">
             <img src="${facilitator.image}" alt="${facilitator.name}">
+          </div>
+          <div class="facilitator-card-body">
+            <div class="facilitator-card-meta">
+              <div class="facilitator-card-name">${escapeHtml(facilitator.name)}</div>
+            </div>
+            <div class="facilitator-bio">${bio}</div>
+            <div class="facilitator-impact-block">
+              <div class="facilitator-impact-label">Impact Footprint</div>
+              <div class="facilitator-impact-list">${renderImpactProjects(
+                facilitator.name
+              )}</div>
+            </div>
           </div>
         </article>
       `;
@@ -143,86 +150,11 @@ async function injectFacilitators() {
   section.innerHTML = `
     <div class="section-tag">08 A· Facilitators</div>
     <h2 class="section-title">Meet the <em>facilitators.</em></h2>
-    <p class="section-lead">A lineup of facilitators bringing real-world perspectives across leadership, public health, execution, and impact-driven work. Click any photo to read the bio.</p>
-    <div class="facilitators-grid">${cards}</div>
-    <div class="facilitator-modal" id="facilitator-modal" aria-hidden="true">
-      <div class="facilitator-modal-card">
-        <button class="success-close" id="facilitator-modal-close" type="button" aria-label="Close">X</button>
-        <div class="facilitator-modal-grid">
-          <div class="facilitator-modal-photo">
-            <img id="facilitator-modal-image" src="" alt="">
-          </div>
-          <div>
-            <div class="facilitator-modal-label">Facilitator Bio</div>
-            <div class="facilitator-modal-name" id="facilitator-modal-name"></div>
-            <div class="facilitator-bio" id="facilitator-modal-bio"></div>
-            <div class="facilitator-impact-block">
-              <div class="facilitator-impact-label">Impact Footprint</div>
-              <div class="facilitator-impact-list" id="facilitator-modal-impact"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <p class="section-lead">A lineup of facilitators bringing real-world perspectives across leadership, public health, execution, and impact-driven work.</p>
+    <div class="facilitators-grid facilitators-grid-expanded">${cards}</div>
   `;
 
   registerSection.parentNode.insertBefore(section, registerSection);
-  setupFacilitatorModal();
-}
-
-async function setupFacilitatorModal() {
-  const modal = document.getElementById("facilitator-modal");
-  const closeButton = document.getElementById("facilitator-modal-close");
-  const nameEl = document.getElementById("facilitator-modal-name");
-  const imageEl = document.getElementById("facilitator-modal-image");
-  const bioEl = document.getElementById("facilitator-modal-bio");
-  const impactEl = document.getElementById("facilitator-modal-impact");
-
-  if (!modal || !closeButton || !nameEl || !imageEl || !bioEl || !impactEl) return;
-
-  await loadImpactFootprints();
-
-  const closeModal = () => {
-    modal.classList.remove("active");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-  };
-
-  const openModal = (trigger) => {
-    const name = trigger.getAttribute("data-name") || "";
-    const image = trigger.getAttribute("data-image") || "";
-    const bio = trigger.getAttribute("data-bio") || "<p>Bio coming soon.</p>";
-
-    nameEl.textContent = name;
-    imageEl.src = image;
-    imageEl.alt = name;
-    bioEl.innerHTML = bio;
-    impactEl.innerHTML = renderImpactProjects(name);
-    modal.classList.add("active");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  };
-
-  document.querySelectorAll("[data-facilitator-trigger]").forEach((trigger) => {
-    trigger.addEventListener("click", () => openModal(trigger));
-    trigger.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openModal(trigger);
-      }
-    });
-  });
-
-  closeButton.addEventListener("click", closeModal);
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) closeModal();
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.classList.contains("active")) {
-      closeModal();
-    }
-  });
 }
 
 function setText(selector, value) {

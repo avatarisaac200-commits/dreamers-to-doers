@@ -5,12 +5,15 @@
   margin-top:60px;
 }
 
+.facilitators-grid-expanded{
+  grid-template-columns:1fr;
+}
+
 .facilitator-card{
   padding:18px;
   background:rgba(36,16,57,0.94);
   border:1px solid var(--border);
   border-radius:18px;
-  cursor:pointer;
   transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;
 }
 
@@ -20,6 +23,18 @@
   box-shadow:0 24px 60px rgba(0,0,0,0.28);
 }
 
+.facilitator-card-expanded{
+  display:grid;
+  grid-template-columns:minmax(220px,300px) 1fr;
+  gap:24px;
+  align-items:start;
+}
+
+.facilitator-card-body{
+  display:grid;
+  gap:18px;
+}
+
 .facilitator-card-meta{
   display:flex;
   flex-wrap:wrap;
@@ -27,6 +42,10 @@
   justify-content:space-between;
   gap:12px;
   margin-top:16px;
+}
+
+.facilitator-card-expanded .facilitator-card-meta{
+  margin-top:0;
 }
 
 .facilitator-card-name{
@@ -99,6 +118,10 @@
   font-size:10px;
   letter-spacing:0.08em;
   text-transform:uppercase;
+}
+
+.facilitator-card-expanded .facilitator-photo::after{
+  content:'Impact + Bio';
 }
 
 .facilitator-modal{
@@ -181,7 +204,7 @@
 }
 
 .facilitator-impact-block{
-  margin-top:28px;
+  margin-top:10px;
   padding-top:24px;
   border-top:1px solid rgba(242,231,253,0.12);
 }
@@ -248,6 +271,7 @@
   border-radius:14px;
   background:rgba(26,11,41,0.56);
 }
+
 .success-close{
   position:absolute;
   right:18px;
@@ -272,7 +296,8 @@
 }
 
 @media (max-width: 900px){
-  .facilitators-grid{
+  .facilitators-grid,
+  .facilitator-card-expanded{
     grid-template-columns:1fr;
   }
 }
@@ -290,6 +315,10 @@
   .facilitator-card-meta{
     gap:10px;
     margin-top:14px;
+  }
+
+  .facilitator-card-expanded .facilitator-card-meta{
+    margin-top:0;
   }
 
   .facilitator-card-name{
@@ -325,5 +354,3 @@
     font-weight:400;
   }
 }
-
-
