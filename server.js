@@ -40,8 +40,8 @@ http
           : urlPath === "/impact-footprints" || urlPath === "/impact-footprints/"
             ? "/impact-footprints.html"
           : urlPath === "/convener" || urlPath === "/convener/" || urlPath === "/covener" || urlPath === "/covener/"
-            ? "/covener.html"
-          : urlPath;
+            ? "/convener.html"
+            : urlPath;
     const filePath = path.normalize(path.join(root, reqPath));
 
     if (!filePath.startsWith(root)) {

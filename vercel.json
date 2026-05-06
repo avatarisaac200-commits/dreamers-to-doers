@@ -26,11 +26,11 @@
     },
     {
       "source": "/convener",
-      "destination": "/covener.html"
+      "destination": "/convener.html"
     },
     {
       "source": "/convener/",
-      "destination": "/covener.html"
+      "destination": "/convener.html"
     },
     {
       "source": "/covener",
