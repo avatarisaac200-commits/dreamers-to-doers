@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "2349162057661";
+﻿const WHATSAPP_NUMBER = "2349162057661";
 const WHATSAPP_GROUP_URL =
   "https://chat.whatsapp.com/Bym2VLFK3P4EwvmInZT6Cf?mode=gi_t";
 
@@ -25,28 +25,14 @@ const facilitators = [
   },
 ];
 
-function normalizeText(text) {
-  return text
-    .replace(/Aú|A·/g, "·")
-    .replace(/ƒ\?\"|Г\?\"|ƒ\?"|Г\?"/g, "—")
-    .replace(/ƒ\+\u0027|Г\+\u0027|ƒ\+|Г\+/g, "→")
-    .replace(/ƒ,İ|Г,▌/g, "₦")
-    .replace(/ƒo"|Гo"/g, "✓")
-    .replace(/ƒo▌|Гo▌/g, "★")
-    .replace(/ƒ-\^|Г-\^/g, "◆")
-    .replace(/ƒ-\+|Г-\+/g, "✦")
-    .replace(/ƒкн|Гкн/g, "⬢")
-    .replace(/ƒo\u0015|Гo\u0015/g, "▣")
-    .replace(/ƒ-%|Г-%/g, "◉")
-    .replace(/Ac/g, "©");
-}
+let facilitatorImpactMap = new Map();
 
 function escapeHtml(text) {
-  return text
+  return String(text)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/\"/g, "&quot;");
 }
 
 function renderBioMarkdown(markdown) {
@@ -75,6 +61,53 @@ async function readBio(file) {
   } catch {
     return "";
   }
+}
+
+async function loadImpactFootprints() {
+  if (facilitatorImpactMap.size) return facilitatorImpactMap;
+
+  try {
+    const response = await fetch("/api/impact-footprints");
+    if (!response.ok) throw new Error("Request failed");
+
+    const data = await response.json();
+    const items = Array.isArray(data.facilitators) ? data.facilitators : [];
+    facilitatorImpactMap = new Map(items.map((item) => [item.name, item]));
+  } catch {
+    facilitatorImpactMap = new Map();
+  }
+
+  return facilitatorImpactMap;
+}
+
+function renderImpactProjects(facilitatorName) {
+  const facilitator = facilitatorImpactMap.get(facilitatorName);
+  if (!facilitator || !Array.isArray(facilitator.projects) || !facilitator.projects.length) {
+    return '<div class="facilitator-impact-empty">Impact footprints for this facilitator will appear here soon.</div>';
+  }
+
+  return facilitator.projects
+    .map((project) => {
+      const images = Array.isArray(project.images)
+        ? project.images
+            .map(
+              (image) => `
+                <a class="facilitator-impact-thumb" href="${image.src}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(project.title)} image">
+                  <img src="${image.src}" alt="${escapeHtml(project.title)}">
+                </a>
+              `
+            )
+            .join("")
+        : "";
+
+      return `
+        <section class="facilitator-impact-project">
+          <h3 class="facilitator-impact-title">${escapeHtml(project.title)}</h3>
+          <div class="facilitator-impact-gallery">${images}</div>
+        </section>
+      `;
+    })
+    .join("");
 }
 
 async function injectFacilitators() {
@@ -108,7 +141,7 @@ async function injectFacilitators() {
   const section = document.createElement("section");
   section.id = "facilitators";
   section.innerHTML = `
-    <div class="section-tag">08 · Facilitators</div>
+    <div class="section-tag">08 A· Facilitators</div>
     <h2 class="section-title">Meet the <em>facilitators.</em></h2>
     <p class="section-lead">A lineup of facilitators bringing real-world perspectives across leadership, public health, execution, and impact-driven work. Click any photo to read the bio.</p>
     <div class="facilitators-grid">${cards}</div>
@@ -123,6 +156,10 @@ async function injectFacilitators() {
             <div class="facilitator-modal-label">Facilitator Bio</div>
             <div class="facilitator-modal-name" id="facilitator-modal-name"></div>
             <div class="facilitator-bio" id="facilitator-modal-bio"></div>
+            <div class="facilitator-impact-block">
+              <div class="facilitator-impact-label">Impact Footprint</div>
+              <div class="facilitator-impact-list" id="facilitator-modal-impact"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -133,14 +170,17 @@ async function injectFacilitators() {
   setupFacilitatorModal();
 }
 
-function setupFacilitatorModal() {
+async function setupFacilitatorModal() {
   const modal = document.getElementById("facilitator-modal");
   const closeButton = document.getElementById("facilitator-modal-close");
   const nameEl = document.getElementById("facilitator-modal-name");
   const imageEl = document.getElementById("facilitator-modal-image");
   const bioEl = document.getElementById("facilitator-modal-bio");
+  const impactEl = document.getElementById("facilitator-modal-impact");
 
-  if (!modal || !closeButton || !nameEl || !imageEl || !bioEl) return;
+  if (!modal || !closeButton || !nameEl || !imageEl || !bioEl || !impactEl) return;
+
+  await loadImpactFootprints();
 
   const closeModal = () => {
     modal.classList.remove("active");
@@ -157,6 +197,7 @@ function setupFacilitatorModal() {
     imageEl.src = image;
     imageEl.alt = name;
     bioEl.innerHTML = bio;
+    impactEl.innerHTML = renderImpactProjects(name);
     modal.classList.add("active");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
@@ -189,48 +230,63 @@ function setText(selector, value) {
   if (node) node.textContent = value;
 }
 
-function replaceTextInNode(node, matcher, replacement) {
-  if (!node) return;
-  node.innerHTML = node.innerHTML.replace(matcher, replacement);
-}
-
 function updateStaticContent() {
-  setText(".hero-meta", "Pan-African Leadership Masterclass · June 2026");
+  setText(".hero-meta", "Dreamers to Doers A· June 2026");
   setText(".countdown-label", "Masterclass Starts In");
 
-  document.querySelectorAll(".cl-val").forEach((node) => {
-    node.textContent = normalizeText(node.textContent)
-      .replace(/2025/g, "2026");
+  const terminalValues = document.querySelectorAll(".cl-val");
+  if (terminalValues[1]) terminalValues[1].textContent = "June 19 - 21, 2026";
+  if (terminalValues[2]) terminalValues[2].textContent = "7:00 PM - 10:00 PM WAT";
+
+  document.querySelectorAll(".day-date").forEach((node) => {
+    node.textContent = node.textContent.replace("6:00 PM", "7:00 PM");
   });
+
+  const dayThreeTitle = document.querySelectorAll(".day-title")[2];
+  if (dayThreeTitle) {
+    dayThreeTitle.innerHTML = "Open Questions and Answer Session - <em>Clarity &amp; Real Conversations</em>";
+  }
 
   const timeTitle = document.querySelectorAll(".section-title")[2];
   if (timeTitle) {
     timeTitle.innerHTML = "Clear your calendar. <em>June 19 - 21, 2026.</em>";
   }
 
-  const timeDates = document.querySelector(".time-cell-value");
-  if (timeDates) {
-    timeDates.innerHTML = "<em>19th - 21st</em><br>June 2026";
+  const timeCells = document.querySelectorAll(".time-cell");
+  if (timeCells[0]) {
+    const value = timeCells[0].querySelector(".time-cell-value");
+    if (value) value.innerHTML = "<em>19th - 21st</em><br>June 2026";
   }
+  if (timeCells[1]) {
+    const value = timeCells[1].querySelector(".time-cell-value");
+    const meta = timeCells[1].querySelector(".time-cell-meta");
+    if (value) value.innerHTML = "<em>7:00 PM - 10:00 PM</em><br>WAT - Daily";
+    if (meta) meta.textContent = "3 hours per day - West African Time";
+  }
+
+  const problemStamp = document.querySelector(".problem-stamp");
+  if (problemStamp) {
+    problemStamp.textContent =
+      "The masterclass that delivers the blueprint for turning ideas to impact";
+  }
+
+  const pricingLead = document.querySelector("#pricing .section-lead");
+  if (pricingLead) pricingLead.remove();
+
+  const earlyTag = document.querySelector(".early-tag");
+  if (earlyTag) earlyTag.textContent = "Special Early Bird Rate LIVE";
 
   const hostSection = document.getElementById("host");
   if (hostSection) {
     const tag = hostSection.querySelector(".section-tag");
-    if (tag) tag.textContent = "07 · Convener";
+    if (tag) tag.textContent = "07 A· Convener";
     const heading = hostSection.querySelector(".section-title");
     if (heading) heading.innerHTML = "Meet the <em>Convener.</em>";
     const lead = hostSection.querySelector(".section-lead");
-    if (lead) {
-      lead.textContent =
-        "The masterclass is convened by a project manager whose work sits at the intersection of strategy, structure, funding, and execution.";
-    }
-    const hostImg = hostSection.querySelector("img");
-    if (hostImg) hostImg.setAttribute("src", "./amara-4.jpg");
+    if (lead) lead.remove();
   }
 
   document.querySelectorAll("a").forEach((link) => {
-    const text = normalizeText(link.textContent || "");
-    link.textContent = text;
     if (link.href.includes("t.me/+yourtelegramlink")) {
       link.href = WHATSAPP_GROUP_URL;
       link.textContent = "Join Waitlist";
@@ -238,23 +294,14 @@ function updateStaticContent() {
     }
   });
 
-  document.querySelectorAll("*").forEach((node) => {
-    if (node.children.length === 0 && node.textContent) {
-      node.textContent = normalizeText(node.textContent)
-        .replace(/2025/g, "2026")
-        .replace("Early Bird Ends In", "Masterclass Starts In");
-    }
-  });
-
   const footerBottom = document.querySelector(".footer-bottom div");
   if (footerBottom) {
-    footerBottom.textContent =
-      "© 2026 Dreamers to Doers · Pan-African Leadership Masterclass";
+    footerBottom.textContent = "© 2026 Dreamers to Doers";
   }
 }
 
 function setupCountdown() {
-  const target = new Date("2026-06-19T18:00:00+01:00").getTime();
+  const target = new Date("2026-06-19T19:00:00+01:00").getTime();
   const dEl = document.getElementById("cd-d");
   const hEl = document.getElementById("cd-h");
   const mEl = document.getElementById("cd-m");
@@ -296,7 +343,7 @@ function setupScrollReveal() {
     "#who .section-tag, #who .section-title, #who .section-lead, #who .who-card",
     ".why-wrap .section-tag, .why-wrap .section-title, .why-wrap .section-lead, .why-item",
     ".outcomes-grid .outcome-cell, .outcomes-grid + *",
-    "#host .section-tag, #host .section-title, #host .section-lead, #host img, #host p, #host [style*='Projects Delivered'], #host [style*='Funding Mobilised'], #host [style*='Years Focused Delivery'], #host [style*='Anna Ajibade'], #host [style*='Strategy and Execution Lead']",
+    "#host .section-tag, #host .section-title, #host img, #host p, #host [style*='Funding Mobilised'], #host [style*='Years Focused Delivery'], #host [style*='Anna Ajibade'], #host [style*='Strategy and Execution Lead']",
     "#register .form-left > *, #register .form-card",
     "footer .footer-inner > *, footer .footer-bottom > *"
   ];
@@ -413,5 +460,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupScrollReveal();
   setupSuccessOverlay();
   setupFormHandler();
+  await injectFacilitators();
 });
-

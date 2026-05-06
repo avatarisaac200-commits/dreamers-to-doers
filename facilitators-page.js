@@ -1,4 +1,4 @@
-const facilitators = [
+﻿const facilitators = [
   {
     name: "Damilola Mogaji",
     image: "./facilitators/mogaji.jpg",
@@ -25,12 +25,14 @@ const facilitators = [
   },
 ];
 
+let facilitatorImpactMap = new Map();
+
 function escapeHtml(text) {
-  return text
+  return String(text)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/\"/g, "&quot;");
 }
 
 function renderBioMarkdown(markdown) {
@@ -61,15 +63,65 @@ async function readBio(file) {
   }
 }
 
-function setupFacilitatorModal() {
+async function loadImpactFootprints() {
+  if (facilitatorImpactMap.size) return facilitatorImpactMap;
+
+  try {
+    const response = await fetch("/api/impact-footprints");
+    if (!response.ok) throw new Error("Request failed");
+
+    const data = await response.json();
+    const items = Array.isArray(data.facilitators) ? data.facilitators : [];
+    facilitatorImpactMap = new Map(items.map((item) => [item.name, item]));
+  } catch {
+    facilitatorImpactMap = new Map();
+  }
+
+  return facilitatorImpactMap;
+}
+
+function renderImpactProjects(facilitatorName) {
+  const facilitator = facilitatorImpactMap.get(facilitatorName);
+  if (!facilitator || !Array.isArray(facilitator.projects) || !facilitator.projects.length) {
+    return '<div class="facilitator-impact-empty">Impact footprints for this facilitator will appear here soon.</div>';
+  }
+
+  return facilitator.projects
+    .map((project) => {
+      const images = Array.isArray(project.images)
+        ? project.images
+            .map(
+              (image) => `
+                <a class="facilitator-impact-thumb" href="${image.src}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(project.title)} image">
+                  <img src="${image.src}" alt="${escapeHtml(project.title)}">
+                </a>
+              `
+            )
+            .join("")
+        : "";
+
+      return `
+        <section class="facilitator-impact-project">
+          <h3 class="facilitator-impact-title">${escapeHtml(project.title)}</h3>
+          <div class="facilitator-impact-gallery">${images}</div>
+        </section>
+      `;
+    })
+    .join("");
+}
+
+async function setupFacilitatorModal() {
   const modal = document.getElementById("facilitator-modal");
   const closeButton = document.getElementById("facilitator-modal-close");
   const nameEl = document.getElementById("facilitator-modal-name");
   const tagEl = document.getElementById("facilitator-modal-tag");
   const imageEl = document.getElementById("facilitator-modal-image");
   const bioEl = document.getElementById("facilitator-modal-bio");
+  const impactEl = document.getElementById("facilitator-modal-impact");
 
-  if (!modal || !closeButton || !nameEl || !tagEl || !imageEl || !bioEl) return;
+  if (!modal || !closeButton || !nameEl || !tagEl || !imageEl || !bioEl || !impactEl) return;
+
+  await loadImpactFootprints();
 
   const closeModal = () => {
     modal.classList.remove("active");
@@ -81,13 +133,16 @@ function setupFacilitatorModal() {
     const name = trigger.getAttribute("data-name") || "";
     const tag = trigger.getAttribute("data-tag") || "";
     const image = trigger.getAttribute("data-image") || "";
-    const bio = trigger.getAttribute("data-bio") || "<p>Full profile details will be shared soon.</p>";
+    const bio =
+      trigger.getAttribute("data-bio") ||
+      "<p>Full profile details will be shared soon.</p>";
 
     nameEl.textContent = name;
     tagEl.textContent = tag;
     imageEl.src = image;
     imageEl.alt = name;
     bioEl.innerHTML = bio;
+    impactEl.innerHTML = renderImpactProjects(name);
     modal.classList.add("active");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
@@ -123,7 +178,9 @@ async function renderFacilitatorsPage() {
 
   grid.innerHTML = facilitators
     .map((facilitator, index) => {
-      const bio = renderBioMarkdown(bios[index]) || "<p>Full profile details will be shared soon.</p>";
+      const bio =
+        renderBioMarkdown(bios[index]) ||
+        "<p>Full profile details will be shared soon.</p>";
 
       return `
         <article
@@ -149,7 +206,7 @@ async function renderFacilitatorsPage() {
     })
     .join("");
 
-  setupFacilitatorModal();
+  await setupFacilitatorModal();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
