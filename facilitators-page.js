@@ -104,9 +104,9 @@ function renderImpactProjects(facilitatorName) {
         ? project.images
             .map(
               (image) => `
-                <a class="facilitator-impact-thumb" href="${image.src}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(project.title)} image">
+                <button class="facilitator-impact-thumb" type="button" data-facilitator-image="${image.src}" data-facilitator-alt="${escapeHtml(project.title)}">
                   <img src="${image.src}" alt="${escapeHtml(project.title)}">
-                </a>
+                </button>
               `
             )
             .join("")
@@ -120,6 +120,96 @@ function renderImpactProjects(facilitatorName) {
       `;
     })
     .join("");
+}
+
+function setupFacilitatorBioToggles() {
+  const grid = document.getElementById("facilitators-grid");
+  if (!grid) return;
+
+  grid.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-bio-toggle]");
+    if (!button) return;
+
+    const panelId = button.getAttribute("data-bio-toggle");
+    const panel = panelId ? document.getElementById(panelId) : null;
+    if (!panel) return;
+
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    button.textContent = isOpen ? "BIO" : "HIDE BIO";
+    panel.hidden = isOpen;
+  });
+}
+
+function setupFacilitatorLightbox() {
+  const lightbox = document.getElementById("facilitator-lightbox");
+  const image = document.getElementById("facilitator-lightbox-image");
+  const closeButton = document.getElementById("facilitator-lightbox-close");
+  const grid = document.getElementById("facilitators-grid");
+
+  if (!lightbox || !image || !closeButton || !grid) return;
+
+  let activeItems = [];
+  let activeIndex = -1;
+
+  const updateImage = () => {
+    const item = activeItems[activeIndex];
+    if (!item) return;
+
+    image.src = item.getAttribute("data-facilitator-image") || "";
+    image.alt = item.getAttribute("data-facilitator-alt") || "";
+  };
+
+  const open = (trigger) => {
+    const gallery = trigger.closest(".facilitator-impact-gallery");
+    activeItems = gallery ? Array.from(gallery.querySelectorAll("[data-facilitator-image]")) : [trigger];
+    activeIndex = Math.max(activeItems.indexOf(trigger), 0);
+    updateImage();
+    lightbox.classList.add("active");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  };
+
+  const close = () => {
+    lightbox.classList.remove("active");
+    lightbox.setAttribute("aria-hidden", "true");
+    image.src = "";
+    image.alt = "";
+    activeItems = [];
+    activeIndex = -1;
+    document.body.style.overflow = "";
+  };
+
+  const showNext = () => {
+    if (!activeItems.length) return;
+    activeIndex = (activeIndex + 1) % activeItems.length;
+    updateImage();
+  };
+
+  const showPrevious = () => {
+    if (!activeItems.length) return;
+    activeIndex = (activeIndex - 1 + activeItems.length) % activeItems.length;
+    updateImage();
+  };
+
+  grid.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-facilitator-image]");
+    if (!trigger) return;
+    open(trigger);
+  });
+
+  closeButton.addEventListener("click", close);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) close();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!lightbox.classList.contains("active")) return;
+
+    if (event.key === "Escape") close();
+    if (event.key === "ArrowRight") showNext();
+    if (event.key === "ArrowLeft") showPrevious();
+  });
 }
 
 async function renderFacilitatorsPage() {
@@ -136,24 +226,37 @@ async function renderFacilitatorsPage() {
       const bio =
         renderBioMarkdown(bios[index]) ||
         "<p>Full profile details will be shared soon.</p>";
+      const bioId = `facilitator-bio-${index + 1}`;
+      const firstName = facilitator.name.split(" ")[0];
 
       return `
-        <article class="facilitator-card facilitator-card-expanded">
-          <div class="facilitator-photo">
-            <img src="${facilitator.image}" alt="${facilitator.name}">
+        <article class="facilitator-feature">
+          <div class="facilitator-profile">
+            <div class="facilitator-photo-shell">
+              <div class="facilitator-photo facilitator-photo-large">
+                <img src="${facilitator.image}" alt="${facilitator.name}">
+              </div>
+            </div>
+            <div class="facilitator-profile-content">
+              <div class="facilitator-profile-label">Facilitator Profile</div>
+              <div class="facilitator-card-meta facilitator-card-meta-host">
+                <div class="facilitator-card-name">${escapeHtml(facilitator.name)}</div>
+                <div class="facilitator-card-tag">${escapeHtml(facilitator.tag)}</div>
+              </div>
+              <div class="facilitator-profile-actions">
+                <button class="facilitator-bio-toggle" type="button" data-bio-toggle="${bioId}" aria-expanded="false">BIO</button>
+              </div>
+              <div class="facilitator-bio-panel" id="${bioId}" hidden>
+                <div class="facilitator-bio">${bio}</div>
+              </div>
+            </div>
           </div>
-          <div class="facilitator-card-body">
-            <div class="facilitator-card-meta">
-              <div class="facilitator-card-name">${escapeHtml(facilitator.name)}</div>
-              <div class="facilitator-card-tag">${escapeHtml(facilitator.tag)}</div>
-            </div>
-            <div class="facilitator-bio">${bio}</div>
-            <div class="facilitator-impact-block">
-              <div class="facilitator-impact-label">Impact Footprint</div>
-              <div class="facilitator-impact-list">${renderImpactProjects(
-                facilitator.name
-              )}</div>
-            </div>
+          <div class="facilitator-impact-section facilitator-impact-section-host">
+            <div class="section-tag">Impact Footprints</div>
+            <h2 class="facilitator-impact-heading">Explore ${escapeHtml(firstName)}'s <em>impact footprints.</em></h2>
+            <div class="facilitator-impact-list facilitator-impact-list-host">${renderImpactProjects(
+              facilitator.name
+            )}</div>
           </div>
         </article>
       `;
@@ -163,4 +266,6 @@ async function renderFacilitatorsPage() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   await renderFacilitatorsPage();
+  setupFacilitatorBioToggles();
+  setupFacilitatorLightbox();
 });
