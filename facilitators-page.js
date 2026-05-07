@@ -35,20 +35,32 @@ function escapeHtml(text) {
     .replace(/\"/g, "&quot;");
 }
 
+function renderInlineMarkdown(text) {
+  return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
 function renderBioMarkdown(markdown) {
-  const normalized = markdown.replace(/\\\*\\\*/g, "**").trim();
-  const paragraphs = normalized
+  const normalized = markdown.replaceAll("\\*\\*", "**").trim();
+  const blocks = normalized
     .split(/\r?\n\s*\r?\n/)
-    .map((block) => block.replace(/\r?\n/g, " ").trim())
+    .map((block) => block.trim())
     .filter(Boolean);
 
-  return paragraphs
-    .map((paragraph) => {
-      const escaped = escapeHtml(paragraph).replace(
-        /\*\*(.+?)\*\*/g,
-        "<strong>$1</strong>"
-      );
-      return `<p>${escaped}</p>`;
+  return blocks
+    .map((block) => {
+      const lines = block
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      if (lines.every((line) => /^- /.test(line))) {
+        const items = lines
+          .map((line) => `<li>${renderInlineMarkdown(line.slice(2).trim())}</li>`)
+          .join("");
+        return `<ul>${items}</ul>`;
+      }
+
+      return `<p>${renderInlineMarkdown(lines.join(" "))}</p>`;
     })
     .join("");
 }

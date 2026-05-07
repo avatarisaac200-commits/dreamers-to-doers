@@ -132,22 +132,22 @@ async function loadCovenerImpactFootprints() {
   if (!container) return;
 
   try {
-    const response = await fetch("/api/convener-impact-footprints");
+    const response = await fetch("/api/host-impact-footprints");
     if (!response.ok) {
       throw new Error("Request failed");
     }
 
     const data = await response.json();
-    const covener = data.covener;
+    const convener = data.covener;
 
-    if (!covener || !Array.isArray(covener.projects)) {
+    if (!convener || !Array.isArray(convener.projects)) {
       throw new Error("Invalid response");
     }
 
-    container.innerHTML = covener.projects.map(renderProject).join("");
+    container.innerHTML = convener.projects.map(renderProject).join("");
   } catch {
     container.innerHTML =
-      '<div class="covener-impact-error">Convener impact footprints could not be loaded right now. Please try again shortly.</div>';
+      '<div class="covener-impact-error">Host impact footprints could not be loaded right now. Please try again shortly.</div>';
   }
 }
 

@@ -9,6 +9,9 @@
     },
     "api/convener-impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
+    },
+    "api/host-impact-footprints.js": {
+      "includeFiles": "facilitators/Impact-footprints/**"
     }
   },
   "rewrites": [
@@ -23,6 +26,22 @@
     {
       "source": "/facilitators/",
       "destination": "/facilitators.html"
+    },
+    {
+      "source": "/host",
+      "destination": "/convener.html"
+    },
+    {
+      "source": "/host/",
+      "destination": "/convener.html"
+    },
+    {
+      "source": "/Host",
+      "destination": "/convener.html"
+    },
+    {
+      "source": "/Host/",
+      "destination": "/convener.html"
     },
     {
       "source": "/Convener",
@@ -42,11 +61,11 @@
     },
     {
       "source": "/covener",
-      "destination": "/covener.html"
+      "destination": "/convener.html"
     },
     {
       "source": "/covener/",
-      "destination": "/covener.html"
+      "destination": "/convener.html"
     },
     {
       "source": "/impact-footprints",

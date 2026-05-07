@@ -35,20 +35,32 @@ function escapeHtml(text) {
     .replace(/\"/g, "&quot;");
 }
 
+function renderInlineMarkdown(text) {
+  return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
 function renderBioMarkdown(markdown) {
-  const normalized = markdown.replace(/\\\*\\\*/g, "**").trim();
-  const paragraphs = normalized
+  const normalized = markdown.replaceAll("\\*\\*", "**").trim();
+  const blocks = normalized
     .split(/\r?\n\s*\r?\n/)
-    .map((block) => block.replace(/\r?\n/g, " ").trim())
+    .map((block) => block.trim())
     .filter(Boolean);
 
-  return paragraphs
-    .map((paragraph) => {
-      const escaped = escapeHtml(paragraph).replace(
-        /\*\*(.+?)\*\*/g,
-        "<strong>$1</strong>"
-      );
-      return `<p>${escaped}</p>`;
+  return blocks
+    .map((block) => {
+      const lines = block
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      if (lines.every((line) => /^- /.test(line))) {
+        const items = lines
+          .map((line) => `<li>${renderInlineMarkdown(line.slice(2).trim())}</li>`)
+          .join("");
+        return `<ul>${items}</ul>`;
+      }
+
+      return `<p>${renderInlineMarkdown(lines.join(" "))}</p>`;
     })
     .join("");
 }
@@ -148,7 +160,7 @@ async function injectFacilitators() {
   const section = document.createElement("section");
   section.id = "facilitators";
   section.innerHTML = `
-    <div class="section-tag">08 A· Facilitators</div>
+    <div class="section-tag">08 - Facilitators</div>
     <h2 class="section-title">Meet the <em>facilitators.</em></h2>
     <p class="section-lead">A lineup of facilitators bringing real-world perspectives across leadership, public health, execution, and impact-driven work.</p>
     <div class="facilitators-grid facilitators-grid-expanded">${cards}</div>
@@ -163,7 +175,7 @@ function setText(selector, value) {
 }
 
 function updateStaticContent() {
-  setText(".hero-meta", "Dreamers to Doers A· June 2026");
+  setText(".hero-meta", "Dreamers to Doers - June 2026");
   setText(".countdown-label", "Masterclass Starts In");
 
   const terminalValues = document.querySelectorAll(".cl-val");
@@ -211,9 +223,9 @@ function updateStaticContent() {
   const hostSection = document.getElementById("host");
   if (hostSection) {
     const tag = hostSection.querySelector(".section-tag");
-    if (tag) tag.textContent = "07 A· Convener";
+    if (tag) tag.textContent = "07 - Host";
     const heading = hostSection.querySelector(".section-title");
-    if (heading) heading.innerHTML = "Meet the <em>Convener.</em>";
+    if (heading) heading.innerHTML = "Meet the <em>Host.</em>";
     const lead = hostSection.querySelector(".section-lead");
     if (lead) lead.remove();
   }
@@ -228,7 +240,7 @@ function updateStaticContent() {
 
   const footerBottom = document.querySelector(".footer-bottom div");
   if (footerBottom) {
-    footerBottom.textContent = "© 2026 Dreamers to Doers";
+    footerBottom.textContent = "Copyright 2026 Dreamers to Doers";
   }
 }
 
@@ -392,5 +404,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupScrollReveal();
   setupSuccessOverlay();
   setupFormHandler();
-  await injectFacilitators();
 });

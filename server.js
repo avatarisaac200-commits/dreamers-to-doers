@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { handleNodeRequest } = require("./api/impact-footprints");
-const { handleNodeRequest: handleCovenerImpactRequest } = require("./api/covener-impact-footprints");
+const { handleNodeRequest: handleHostImpactRequest } = require("./api/covener-impact-footprints");
 
 const root = __dirname;
 const port = process.env.PORT || 3000;
@@ -27,8 +27,12 @@ http
       return;
     }
 
-    if (urlPath === "/api/covener-impact-footprints" || urlPath === "/api/convener-impact-footprints") {
-      handleCovenerImpactRequest(req, res, root);
+    if (
+      urlPath === "/api/host-impact-footprints" ||
+      urlPath === "/api/covener-impact-footprints" ||
+      urlPath === "/api/convener-impact-footprints"
+    ) {
+      handleHostImpactRequest(req, res, root);
       return;
     }
 
@@ -39,7 +43,16 @@ http
           ? "/facilitators.html"
           : urlPath === "/impact-footprints" || urlPath === "/impact-footprints/"
             ? "/impact-footprints.html"
-          : urlPath === "/Convener" || urlPath === "/Convener/" || urlPath === "/convener" || urlPath === "/convener/" || urlPath === "/covener" || urlPath === "/covener/"
+          : urlPath === "/Host" ||
+              urlPath === "/Host/" ||
+              urlPath === "/host" ||
+              urlPath === "/host/" ||
+              urlPath === "/Convener" ||
+              urlPath === "/Convener/" ||
+              urlPath === "/convener" ||
+              urlPath === "/convener/" ||
+              urlPath === "/covener" ||
+              urlPath === "/covener/"
             ? "/convener.html"
             : urlPath;
     const filePath = path.normalize(path.join(root, reqPath));
