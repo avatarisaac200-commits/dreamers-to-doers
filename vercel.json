@@ -18,8 +18,12 @@
       "destination": "/api/host-impact-footprints.js"
     },
     {
-      "source": "/:path*",
-      "destination": "/api/site?path=:path*"
+      "source": "/",
+      "destination": "/api/site?path="
+    },
+    {
+      "source": "^/(?!api/)(.*)$",
+      "destination": "/api/site?path=$1"
     }
   ],
   "functions": {
