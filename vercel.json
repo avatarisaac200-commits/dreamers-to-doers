@@ -16,6 +16,10 @@
   },
   "rewrites": [
     {
+      "source": "/public/flier.jpeg",
+      "destination": "/flier.jpeg"
+    },
+    {
       "source": "/",
       "destination": "/index.html"
     },
