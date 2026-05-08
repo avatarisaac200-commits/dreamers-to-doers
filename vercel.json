@@ -1,63 +1,90 @@
 {
   "version": 2,
-  "redirects": [
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
     {
       "source": "/host",
-      "destination": "/host/",
-      "permanent": true
+      "destination": "/host/index.html"
+    },
+    {
+      "source": "/host/",
+      "destination": "/host/index.html"
     },
     {
       "source": "/facilitators",
-      "destination": "/facilitators/",
-      "permanent": true
+      "destination": "/facilitators/index.html"
+    },
+    {
+      "source": "/facilitators/",
+      "destination": "/facilitators/index.html"
     },
     {
       "source": "/impact-footprints",
-      "destination": "/impact-footprints/",
-      "permanent": true
+      "destination": "/impact-footprints/index.html"
+    },
+    {
+      "source": "/impact-footprints/",
+      "destination": "/impact-footprints/index.html"
     },
     {
       "source": "/covener",
-      "destination": "/host/",
-      "permanent": true
+      "destination": "/host/index.html"
     },
     {
       "source": "/covener/",
-      "destination": "/host/",
-      "permanent": true
+      "destination": "/host/index.html"
     },
     {
       "source": "/convener",
-      "destination": "/host/",
-      "permanent": true
+      "destination": "/host/index.html"
     },
     {
       "source": "/convener/",
-      "destination": "/host/",
-      "permanent": true
+      "destination": "/host/index.html"
+    },
+    {
+      "source": "/Host",
+      "destination": "/host/index.html"
+    },
+    {
+      "source": "/Host/",
+      "destination": "/host/index.html"
+    },
+    {
+      "source": "/Covener",
+      "destination": "/host/index.html"
+    },
+    {
+      "source": "/Covener/",
+      "destination": "/host/index.html"
+    },
+    {
+      "source": "/Convener",
+      "destination": "/host/index.html"
+    },
+    {
+      "source": "/Convener/",
+      "destination": "/host/index.html"
     },
     {
       "source": "/facilitators.html",
-      "destination": "/facilitators/",
-      "permanent": true
+      "destination": "/facilitators/index.html"
     },
     {
       "source": "/impact-footprints.html",
-      "destination": "/impact-footprints/",
-      "permanent": true
+      "destination": "/impact-footprints/index.html"
     },
     {
       "source": "/covener.html",
-      "destination": "/host/",
-      "permanent": true
+      "destination": "/host/index.html"
     },
     {
       "source": "/convener.html",
-      "destination": "/host/",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
+      "destination": "/host/index.html"
+    },
     {
       "source": "/api/impact-image",
       "destination": "/api/impact-image.js"
@@ -80,10 +107,10 @@
     }
   ],
   "functions": {
-    "api/impact-footprints.js": {
+    "api/impact-image.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
     },
-    "api/impact-image.js": {
+    "api/impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
     },
     "api/covener-impact-footprints.js": {
