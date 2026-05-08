@@ -1,18 +1,41 @@
-# Masterclass Standalone
+# Dreamers to Doers
 
-This is the standalone export of the `Dreamers to Doers` masterclass page.
+A production-oriented Next.js rebuild of the original Dreamers to Doers landing experience.
 
-## Run
+## Stack
+
+- Next.js App Router
+- React 19
+- File-based content loading for facilitator bios and impact galleries
+- Public asset pipeline for all media
+
+## Routes
+
+- `/` landing page
+- `/host` host profile
+- `/facilitators` facilitator profiles
+- `/impact-footprints` impact gallery
+
+Legacy `covener` and `convener` routes redirect to `/host`.
+
+## Development
 
 ```bash
+npm install
+npm run dev
+```
+
+For a production build:
+
+```bash
+npm run build
 npm start
 ```
 
-Then open `http://localhost:3000`.
+## Project Structure
 
-## Notes
-
-- This project is fully separate from the main landing page app.
-- The WhatsApp registration flow and group link are preserved.
-- Facilitator bios render `**bold**` markdown as bold text.
-- Only `facilitators/bio1.md` currently exists in the source workspace. The other facilitator cards will show `Bio coming soon.` until `bio2.md`, `bio3.md`, and `bio4.md` are added.
+- `src/app` route entrypoints and global styling
+- `src/components` reusable UI and interactive client components
+- `src/lib/content.js` content loading and gallery discovery
+- `public/images` shared root images
+- `public/facilitators` facilitator portraits, bios, and impact assets
