@@ -36,18 +36,7 @@
       "includeFiles": "facilitators/Impact-footprints/**"
     },
     "api/site.js": {
-      "includeFiles": [
-        "*.html",
-        "*.css",
-        "*.js",
-        "*.jpg",
-        "*.jpeg",
-        "api/**",
-        "host/**",
-        "public/**",
-        "facilitators/**",
-        "impact-footprints/**"
-      ]
+      "includeFiles": "**/*"
     }
   }
 }
