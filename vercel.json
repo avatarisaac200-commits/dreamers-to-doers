@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "functions": {
     "api/impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
@@ -12,5 +13,42 @@
     "api/host-impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/api/impact-footprints",
+      "dest": "/api/impact-footprints.js"
+    },
+    {
+      "src": "/api/covener-impact-footprints",
+      "dest": "/api/covener-impact-footprints.js"
+    },
+    {
+      "src": "/api/convener-impact-footprints",
+      "dest": "/api/convener-impact-footprints.js"
+    },
+    {
+      "src": "/api/host-impact-footprints",
+      "dest": "/api/host-impact-footprints.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/$",
+      "dest": "/index.html"
+    },
+    {
+      "src": "^/host/?$",
+      "dest": "/host/index.html"
+    },
+    {
+      "src": "^/facilitators/?$",
+      "dest": "/facilitators/index.html"
+    },
+    {
+      "src": "^/impact-footprints/?$",
+      "dest": "/impact-footprints/index.html"
+    }
+  ]
 }
