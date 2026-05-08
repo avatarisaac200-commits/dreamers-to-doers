@@ -1,6 +1,67 @@
 {
   "version": 2,
+  "redirects": [
+    {
+      "source": "/host",
+      "destination": "/host/",
+      "permanent": true
+    },
+    {
+      "source": "/facilitators",
+      "destination": "/facilitators/",
+      "permanent": true
+    },
+    {
+      "source": "/impact-footprints",
+      "destination": "/impact-footprints/",
+      "permanent": true
+    },
+    {
+      "source": "/covener",
+      "destination": "/host/",
+      "permanent": true
+    },
+    {
+      "source": "/covener/",
+      "destination": "/host/",
+      "permanent": true
+    },
+    {
+      "source": "/convener",
+      "destination": "/host/",
+      "permanent": true
+    },
+    {
+      "source": "/convener/",
+      "destination": "/host/",
+      "permanent": true
+    },
+    {
+      "source": "/facilitators.html",
+      "destination": "/facilitators/",
+      "permanent": true
+    },
+    {
+      "source": "/impact-footprints.html",
+      "destination": "/impact-footprints/",
+      "permanent": true
+    },
+    {
+      "source": "/covener.html",
+      "destination": "/host/",
+      "permanent": true
+    },
+    {
+      "source": "/convener.html",
+      "destination": "/host/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
+    {
+      "source": "/api/impact-image",
+      "destination": "/api/impact-image.js"
+    },
     {
       "source": "/api/impact-footprints",
       "destination": "/api/impact-footprints.js"
@@ -16,18 +77,13 @@
     {
       "source": "/api/host-impact-footprints",
       "destination": "/api/host-impact-footprints.js"
-    },
-    {
-      "source": "/",
-      "destination": "/api/site?path="
-    },
-    {
-      "source": "^/(?!api/)(.*)$",
-      "destination": "/api/site?path=$1"
     }
   ],
   "functions": {
     "api/impact-footprints.js": {
+      "includeFiles": "facilitators/Impact-footprints/**"
+    },
+    "api/impact-image.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
     },
     "api/covener-impact-footprints.js": {
@@ -38,9 +94,6 @@
     },
     "api/host-impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
-    },
-    "api/site.js": {
-      "includeFiles": "**/*"
     }
   }
 }

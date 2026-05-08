@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { handleNodeRequest } = require("./api/impact-footprints");
 const { handleNodeRequest: handleHostImpactRequest } = require("./api/covener-impact-footprints");
+const handleImpactImageRequest = require("./api/impact-image");
 
 const root = __dirname;
 const port = process.env.PORT || 3000;
@@ -18,12 +19,45 @@ const types = {
   ".md": "text/plain; charset=utf-8",
 };
 
+const redirects = {
+  "/host": "/host/",
+  "/facilitators": "/facilitators/",
+  "/impact-footprints": "/impact-footprints/",
+  "/convener": "/host/",
+  "/convener/": "/host/",
+  "/covener": "/host/",
+  "/covener/": "/host/",
+  "/Convener": "/host/",
+  "/Convener/": "/host/",
+  "/Covener": "/host/",
+  "/Covener/": "/host/",
+  "/Host": "/host/",
+  "/Host/": "/host/",
+  "/facilitators.html": "/facilitators/",
+  "/impact-footprints.html": "/impact-footprints/",
+  "/convener.html": "/host/",
+  "/covener.html": "/host/",
+};
+
 http
   .createServer((req, res) => {
     const urlPath = decodeURIComponent((req.url || "/").split("?")[0]);
 
+    if (redirects[urlPath]) {
+      res.writeHead(308, { Location: redirects[urlPath] });
+      res.end();
+      return;
+    }
+
     if (urlPath === "/api/impact-footprints") {
       handleNodeRequest(req, res, root);
+      return;
+    }
+
+    if (urlPath === "/api/impact-image") {
+      const url = new URL(req.url || "/api/impact-image", "http://localhost");
+      req.query = { path: url.searchParams.get("path") || "" };
+      handleImpactImageRequest(req, res);
       return;
     }
 
@@ -39,21 +73,12 @@ http
     const reqPath =
       urlPath === "/"
         ? "/index.html"
-        : urlPath === "/facilitators" || urlPath === "/facilitators/"
-          ? "/facilitators.html"
-          : urlPath === "/impact-footprints" || urlPath === "/impact-footprints/"
-            ? "/impact-footprints.html"
-          : urlPath === "/Host" ||
-              urlPath === "/Host/" ||
-              urlPath === "/host" ||
-              urlPath === "/host/" ||
-              urlPath === "/Convener" ||
-              urlPath === "/Convener/" ||
-              urlPath === "/convener" ||
-              urlPath === "/convener/" ||
-              urlPath === "/covener" ||
-              urlPath === "/covener/"
-            ? "/convener.html"
+        : urlPath === "/facilitators/"
+          ? "/facilitators/index.html"
+          : urlPath === "/impact-footprints/"
+            ? "/impact-footprints/index.html"
+            : urlPath === "/host/"
+              ? "/host/index.html"
             : urlPath;
     const filePath = path.normalize(path.join(root, reqPath));
 

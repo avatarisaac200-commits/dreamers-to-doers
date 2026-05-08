@@ -15,9 +15,9 @@ function listProjectImages(projectDir, projectSlug) {
     .filter((entry) => /\.(png|jpe?g|webp|gif)$/i.test(entry.name))
     .map((entry) => ({
       name: entry.name,
-      src: `/facilitators/Impact-footprints/${projectSlug}/${encodeURIComponent(
-        path.basename(projectDir)
-      )}/${encodeURIComponent(entry.name)}`,
+      src: `/api/impact-image?path=${encodeURIComponent(
+        `${projectSlug}/${path.basename(projectDir)}/${entry.name}`.replace(/\\/g, "/")
+      )}`,
     }));
 }
 

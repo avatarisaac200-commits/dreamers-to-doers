@@ -35,9 +35,9 @@ function listProjectImages(projectDir, projectSlug) {
     .filter((entry) => /\.(png|jpe?g|webp|gif)$/i.test(entry.name))
     .map((entry) => ({
       name: entry.name,
-      src: `/facilitators/Impact-footprints/${projectSlug}/${encodeURIComponent(
-        path.basename(projectDir)
-      )}/${encodeURIComponent(entry.name)}`,
+      src: `/api/impact-image?path=${encodeURIComponent(
+        `${projectSlug}/${path.basename(projectDir)}/${entry.name}`.replace(/\\/g, "/")
+      )}`,
     }));
 }
 
@@ -55,9 +55,9 @@ function collectProjectGroups(baseDir, facilitatorSlug, includeLooseImages = fal
         title: "Featured images",
         images: imageFiles.map((entry) => ({
           name: entry.name,
-          src: `/facilitators/Impact-footprints/${facilitatorSlug}/${encodeURIComponent(
-            path.basename(baseDir)
-          )}/${encodeURIComponent(entry.name)}`,
+          src: `/api/impact-image?path=${encodeURIComponent(
+            `${facilitatorSlug}/${path.basename(baseDir)}/${entry.name}`.replace(/\\/g, "/")
+          )}`,
         })),
       });
     }
