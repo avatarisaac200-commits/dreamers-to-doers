@@ -1,109 +1,102 @@
 {
   "version": 2,
-  "rewrites": [
+  "builds": [
     {
-      "source": "/",
-      "destination": "/index.html"
+      "src": "api/*.js",
+      "use": "@vercel/node"
     },
     {
-      "source": "/host",
-      "destination": "/host/index.html"
+      "src": "*.html",
+      "use": "@vercel/static"
     },
     {
-      "source": "/host/",
-      "destination": "/host/index.html"
+      "src": "*.css",
+      "use": "@vercel/static"
     },
     {
-      "source": "/facilitators",
-      "destination": "/facilitators/index.html"
+      "src": "*.js",
+      "use": "@vercel/static"
     },
     {
-      "source": "/facilitators/",
-      "destination": "/facilitators/index.html"
+      "src": "*.jpg",
+      "use": "@vercel/static"
     },
     {
-      "source": "/impact-footprints",
-      "destination": "/impact-footprints/index.html"
+      "src": "*.jpeg",
+      "use": "@vercel/static"
     },
     {
-      "source": "/impact-footprints/",
-      "destination": "/impact-footprints/index.html"
+      "src": "host/*.html",
+      "use": "@vercel/static"
     },
     {
-      "source": "/covener",
-      "destination": "/host/index.html"
+      "src": "facilitators/**/*",
+      "use": "@vercel/static"
     },
     {
-      "source": "/covener/",
-      "destination": "/host/index.html"
+      "src": "impact-footprints/*.html",
+      "use": "@vercel/static"
     },
     {
-      "source": "/convener",
-      "destination": "/host/index.html"
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/$",
+      "dest": "/index.html"
     },
     {
-      "source": "/convener/",
-      "destination": "/host/index.html"
+      "src": "^/host/?$",
+      "dest": "/host/index.html"
     },
     {
-      "source": "/Host",
-      "destination": "/host/index.html"
+      "src": "^/facilitators/?$",
+      "dest": "/facilitators/index.html"
     },
     {
-      "source": "/Host/",
-      "destination": "/host/index.html"
+      "src": "^/impact-footprints/?$",
+      "dest": "/impact-footprints/index.html"
     },
     {
-      "source": "/Covener",
-      "destination": "/host/index.html"
+      "src": "^/(covener|convener|Host|Covener|Convener)/?$",
+      "dest": "/host/index.html"
     },
     {
-      "source": "/Covener/",
-      "destination": "/host/index.html"
+      "src": "^/facilitators\\.html$",
+      "dest": "/facilitators/index.html"
     },
     {
-      "source": "/Convener",
-      "destination": "/host/index.html"
+      "src": "^/impact-footprints\\.html$",
+      "dest": "/impact-footprints/index.html"
     },
     {
-      "source": "/Convener/",
-      "destination": "/host/index.html"
+      "src": "^/(covener|convener)\\.html$",
+      "dest": "/host/index.html"
     },
     {
-      "source": "/facilitators.html",
-      "destination": "/facilitators/index.html"
+      "src": "^/api/impact-image$",
+      "dest": "/api/impact-image.js"
     },
     {
-      "source": "/impact-footprints.html",
-      "destination": "/impact-footprints/index.html"
+      "src": "^/api/impact-footprints$",
+      "dest": "/api/impact-footprints.js"
     },
     {
-      "source": "/covener.html",
-      "destination": "/host/index.html"
+      "src": "^/api/covener-impact-footprints$",
+      "dest": "/api/covener-impact-footprints.js"
     },
     {
-      "source": "/convener.html",
-      "destination": "/host/index.html"
+      "src": "^/api/convener-impact-footprints$",
+      "dest": "/api/convener-impact-footprints.js"
     },
     {
-      "source": "/api/impact-image",
-      "destination": "/api/impact-image.js"
+      "src": "^/api/host-impact-footprints$",
+      "dest": "/api/host-impact-footprints.js"
     },
     {
-      "source": "/api/impact-footprints",
-      "destination": "/api/impact-footprints.js"
-    },
-    {
-      "source": "/api/covener-impact-footprints",
-      "destination": "/api/covener-impact-footprints.js"
-    },
-    {
-      "source": "/api/convener-impact-footprints",
-      "destination": "/api/convener-impact-footprints.js"
-    },
-    {
-      "source": "/api/host-impact-footprints",
-      "destination": "/api/host-impact-footprints.js"
+      "handle": "filesystem"
     }
   ],
   "functions": {
