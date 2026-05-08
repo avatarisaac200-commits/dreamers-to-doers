@@ -1,26 +1,26 @@
 ﻿const facilitators = [
   {
     name: "Damilola Mogaji",
-    image: "./facilitators/mogaji.jpg",
-    bioFile: "./facilitators/bio4.md",
+    image: "/facilitators/mogaji.jpg",
+    bioFile: "/facilitators/bio4.md",
     tag: "7+ years of experience",
   },
   {
     name: "Temitayo Femi Matthew",
-    image: "./facilitators/matthew.jpg",
-    bioFile: "./facilitators/bio3.md",
+    image: "/facilitators/matthew.jpg",
+    bioFile: "/facilitators/bio3.md",
     tag: "6+ years of experience",
   },
   {
     name: "Olufolake Zion Adegoke",
-    image: "./facilitators/olufolake.jpeg",
-    bioFile: "./facilitators/bio2.md",
+    image: "/facilitators/olufolake.jpeg",
+    bioFile: "/facilitators/bio2.md",
     tag: "5+ years of experience",
   },
   {
     name: "Ifeoluwa Oyewole",
-    image: "./facilitators/ifeoluwa.jpeg",
-    bioFile: "./facilitators/bio1.md",
+    image: "/facilitators/ifeoluwa.jpeg",
+    bioFile: "/facilitators/bio1.md",
     tag: "10+ years of experience",
   },
 ];
