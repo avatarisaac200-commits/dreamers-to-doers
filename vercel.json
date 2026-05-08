@@ -18,68 +18,8 @@
       "destination": "/api/host-impact-footprints.js"
     },
     {
-      "source": "/host",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/host/",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/Host",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/Host/",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/convener",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/convener/",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/Convener",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/Convener/",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/covener",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/covener/",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/Covener",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/Covener/",
-      "destination": "/host/index.html"
-    },
-    {
-      "source": "/facilitators",
-      "destination": "/facilitators/index.html"
-    },
-    {
-      "source": "/facilitators/",
-      "destination": "/facilitators/index.html"
-    },
-    {
-      "source": "/impact-footprints",
-      "destination": "/impact-footprints/index.html"
-    },
-    {
-      "source": "/impact-footprints/",
-      "destination": "/impact-footprints/index.html"
+      "source": "/:path*",
+      "destination": "/api/site?path=:path*"
     }
   ],
   "functions": {
@@ -94,6 +34,20 @@
     },
     "api/host-impact-footprints.js": {
       "includeFiles": "facilitators/Impact-footprints/**"
+    },
+    "api/site.js": {
+      "includeFiles": [
+        "*.html",
+        "*.css",
+        "*.js",
+        "*.jpg",
+        "*.jpeg",
+        "api/**",
+        "host/**",
+        "public/**",
+        "facilitators/**",
+        "impact-footprints/**"
+      ]
     }
   }
 }
